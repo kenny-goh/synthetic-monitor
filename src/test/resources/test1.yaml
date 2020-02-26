@@ -1,0 +1,18 @@
+!SyntheticTest
+actions:
+  - !ActionAPI
+    excludeInTestReport: false
+    headers: {
+    }
+    maximalResponseThreshold: 0
+    method: GET
+    name: Check version of branch service
+    optimalResponseThreshold: 0
+    postRequestScript: |-
+      context.vars.put('var1', context.status);
+      context.vars.put('var2', context.content);
+    preRequestScript: ''
+    url: http://reecetstausys.reece.com.au/branch-services/version
+name: Version checks
+pauseTimeBetweenActionsInSeconds: 0
+scheduleTimeInMinutes: 0
