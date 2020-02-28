@@ -144,9 +144,9 @@ public class SyntheticTestAPIExecutionTests extends BaseSyntheticTestSpringSuppo
 				.withQueryParam("param1", equalTo("foo"))
 				.withQueryParam("param2", equalTo("bar"))
 				.willReturn(
-						aResponse()
-								.withStatus(HttpStatus.SC_OK)
-								.withBody("")));
+					aResponse()
+						.withStatus(HttpStatus.SC_OK)
+						.withBody("")));
 	}
 
 	private void givenPostRequestWillReturnExpectedMockedResult() {
@@ -154,10 +154,10 @@ public class SyntheticTestAPIExecutionTests extends BaseSyntheticTestSpringSuppo
 			post(urlPathEqualTo("/submit-data"))
 				.withRequestBody(equalTo(MOCK_JSON_RESPONSE))
 				.willReturn(
-						aResponse()
-								.withStatus(HttpStatus.SC_OK)
-								.withHeader(HTTP.CONTENT_TYPE, APPLICATION_JSON_VALUE)
-								.withBody("")));
+					aResponse()
+						.withStatus(HttpStatus.SC_OK)
+						.withHeader(HTTP.CONTENT_TYPE, APPLICATION_JSON_VALUE)
+						.withBody("")));
 	}
 
 
