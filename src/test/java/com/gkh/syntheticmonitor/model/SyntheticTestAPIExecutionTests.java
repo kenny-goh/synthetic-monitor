@@ -21,7 +21,7 @@ public class SyntheticTestAPIExecutionTests extends BaseSyntheticTestSpringSuppo
 	@SneakyThrows
 	public void givenValidURlCanExecuteGetTest() {
 
-		givenGetHelloWillReturnOkay();
+		givenGetHelloRequestWillReturnOkay();
 
 		SyntheticTest test = SyntheticTest.builder()
 				.name("Test")
@@ -37,7 +37,7 @@ public class SyntheticTestAPIExecutionTests extends BaseSyntheticTestSpringSuppo
 	@Test
 	@SneakyThrows
 	public void givenValidUrlAndQueryParametersCanExecuteGetTest() {
-		givenGetHelloWithQueryParametersWillReturnOkay();
+		givenGetHelloRequestWithQueryParametersWillReturnOkay();
 
 		SyntheticTest test = SyntheticTest.builder()
 				.name("Test")
@@ -55,7 +55,7 @@ public class SyntheticTestAPIExecutionTests extends BaseSyntheticTestSpringSuppo
 	@SneakyThrows
 	public void givenValidUrlAndHeadersAndBodyCanExecutePostTest() {
 
-		givenPostSubmitDataWillReturnExpectedMockedResult();
+		givenPostRequestWillReturnExpectedMockedResult();
 
 		SyntheticTest test = SyntheticTest.builder()
 				.name("Test")
@@ -77,7 +77,7 @@ public class SyntheticTestAPIExecutionTests extends BaseSyntheticTestSpringSuppo
 	@SneakyThrows
 	public void syntheticTestCanStoreStatusIntoContext() {
 
-		givenGetHelloWillReturnOkay();
+		givenGetHelloRequestWillReturnOkay();
 
 		SyntheticTest test = SyntheticTest.builder()
 				.name("Test")
@@ -94,7 +94,7 @@ public class SyntheticTestAPIExecutionTests extends BaseSyntheticTestSpringSuppo
 	@SneakyThrows
 	public void syntheticTestCanStoreOutputIntoContextVariables() {
 
-		givenGetHelloWillReturnOkay();
+		givenGetHelloRequestWillReturnOkay();
 
 		SyntheticTest test = SyntheticTest.builder()
 				.name("Test")
@@ -114,7 +114,7 @@ public class SyntheticTestAPIExecutionTests extends BaseSyntheticTestSpringSuppo
 	@SneakyThrows
 	public void syntheticTestCanResolveExpressionInAPIUrlPriorToTestExecution() {
 
-		givenGetHelloWillReturnOkay();
+		givenGetHelloRequestWillReturnOkay();
 
 		SyntheticTest test = SyntheticTest.builder()
 				.name("Test")
@@ -129,35 +129,35 @@ public class SyntheticTestAPIExecutionTests extends BaseSyntheticTestSpringSuppo
 		Assertions.assertEquals(context.getStatus(), "200 OK");
 	}
 
-	private void givenGetHelloWillReturnOkay() {
+	private void givenGetHelloRequestWillReturnOkay() {
 		stubFor(
-				get(urlPathEqualTo("/hello"))
-						.willReturn(
-								aResponse()
-										.withStatus(HttpStatus.SC_OK)
-										.withBody("")));
+			get(urlPathEqualTo("/hello"))
+				.willReturn(
+					aResponse()
+					.withStatus(HttpStatus.SC_OK)
+					.withBody("")));
 	}
 
-	private void givenGetHelloWithQueryParametersWillReturnOkay() {
+	private void givenGetHelloRequestWithQueryParametersWillReturnOkay() {
 		stubFor(
-				get(urlPathEqualTo("/hello"))
-						.withQueryParam("param1", equalTo("foo"))
-						.withQueryParam("param2", equalTo("bar"))
-						.willReturn(
-								aResponse()
-										.withStatus(HttpStatus.SC_OK)
-										.withBody("")));
+			get(urlPathEqualTo("/hello"))
+				.withQueryParam("param1", equalTo("foo"))
+				.withQueryParam("param2", equalTo("bar"))
+				.willReturn(
+						aResponse()
+								.withStatus(HttpStatus.SC_OK)
+								.withBody("")));
 	}
 
-	private void givenPostSubmitDataWillReturnExpectedMockedResult() {
+	private void givenPostRequestWillReturnExpectedMockedResult() {
 		stubFor(
-				post(urlPathEqualTo("/submit-data"))
-						.withRequestBody(equalTo(MOCK_JSON_RESPONSE))
-						.willReturn(
-								aResponse()
-										.withStatus(HttpStatus.SC_OK)
-										.withHeader(HTTP.CONTENT_TYPE, APPLICATION_JSON_VALUE)
-										.withBody("")));
+			post(urlPathEqualTo("/submit-data"))
+				.withRequestBody(equalTo(MOCK_JSON_RESPONSE))
+				.willReturn(
+						aResponse()
+								.withStatus(HttpStatus.SC_OK)
+								.withHeader(HTTP.CONTENT_TYPE, APPLICATION_JSON_VALUE)
+								.withBody("")));
 	}
 
 
