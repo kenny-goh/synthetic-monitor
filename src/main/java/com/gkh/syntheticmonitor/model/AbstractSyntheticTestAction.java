@@ -1,5 +1,7 @@
 package com.gkh.syntheticmonitor.model;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import groovy.lang.Binding;
 import groovy.lang.GroovyShell;
 import lombok.AllArgsConstructor;
@@ -14,8 +16,15 @@ import org.springframework.beans.factory.annotation.Value;
 @NoArgsConstructor
 @SuperBuilder
 @Slf4j
+@JsonTypeInfo(
+		use = JsonTypeInfo.Id.NAME,
+		property = "type")
+@JsonSubTypes({
+		@JsonSubTypes.Type(value = SyntheticTestActionAPI.class, name = "TestActionAPI")
+})
 public abstract class AbstractSyntheticTestAction implements SyntheticTestActionInterface {
 
+	private String type;
 	private String name;
 	private boolean excludeInTestReport;
 	private String postRequestScript;
@@ -44,6 +53,11 @@ public abstract class AbstractSyntheticTestAction implements SyntheticTestAction
 		binding.setVariable("context", context);
 		GroovyShell shell = new GroovyShell(binding);
 		shell.evaluate(script);
+	}
+
+	@Override
+	public void resolveVariables(TestExecutionContext context) {
+
 	}
 
 
