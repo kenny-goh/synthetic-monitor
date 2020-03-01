@@ -1,18 +1,22 @@
 ---
 name: "Test"
-scheduleTimeInMinutes: 0
-pauseTimeBetweenActionsInSeconds: 0
+description: null
+scheduleTimeInSeconds: 15
+pauseTimeBetweenActionsInSeconds: 5
+active: false
 actions:
-- !<TestActionAPI>
-  type: "API"
+- !<API>
   name: "Simple test to execute POST api call"
+  description: null
+  type: "API"
   excludeInTestReport: false
-  postRequestScript: ""
-  preRequestScript: ""
+  postRequestScript: null
+  preRequestScript: null
   optimalResponseThreshold: 0
   maximalResponseThreshold: 0
   requestHeaders:
     Content-Type: "application/json"
   requestMethod: "POST"
   requestUrl: "http://localhost:8080/submit-data"
-  requestBody: ""
+  requestBody: null
+  expectedStatus: "200"

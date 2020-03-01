@@ -32,15 +32,18 @@ public class YamlTests extends BaseSyntheticTestSpringSupport {
 
 		SyntheticTest test = SyntheticTest.builder()
 				.name("Test")
-				.postApiAction("Simple test to execute POST api call",
-						TEST_URL + "/submit-data",
-						new HashMap<String, String>() {{
+				.action(TestActionAPI.builder()
+						.name("Simple test to execute POST api call")
+						.requestMethod(TestActionAPI.METHOD_POST)
+						.requestUrl(TEST_URL + "/submit-data")
+						.requestHeaders(new HashMap<String, String>() {{
 							put(HTTP.CONTENT_TYPE, APPLICATION_JSON_VALUE);
-						}},
-						"")
+						}})
+						.expectedStatus("200")
+						.build())
 				.build();
 
-		String genaratedYaml = SyntheticTest.toYAML(test);
+		String genaratedYaml = test.toYAML();
 		String yamlFromFile = loadYamlFromFile();
 
 		Assertions.assertEquals(yamlFromFile.strip(), genaratedYaml.strip());

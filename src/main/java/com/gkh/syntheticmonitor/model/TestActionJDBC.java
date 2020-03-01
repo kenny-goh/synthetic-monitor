@@ -4,9 +4,12 @@ package com.gkh.syntheticmonitor.model;
 import lombok.Data;
 import lombok.experimental.SuperBuilder;
 
+//@Entity
+//@Table(name="ACTION_JDBC")
+//@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Data
 @SuperBuilder
-public class SyntheticTestActionJDBC extends AbstractSyntheticTestAction {
+public class TestActionJDBC extends AbstractTestAction {
 
 	public final static String JDBC = "JDBC";
 

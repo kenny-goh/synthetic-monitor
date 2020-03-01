@@ -1,0 +1,32 @@
+---
+name: "Test1"
+description: null
+scheduleTimeInSeconds: 15
+pauseTimeBetweenActionsInSeconds: 5
+active: true
+actions:
+  - !<API>
+    name: "Call cat facts API "
+    description: null
+    type: "API"
+    excludeInTestReport: false
+    optimalResponseThreshold: 500
+    maximalResponseThreshold: 3000
+    requestMethod: "GET"
+    requestUrl: "https://cat-fact.herokuapp.com/facts"
+    requestBody: null
+    expectedStatus: "200"
+  - !<API>
+    name: "Call random fox API"
+    description: null
+    type: "API"
+    excludeInTestReport: false
+    postRequestScript: null
+    preRequestScript: null
+    optimalResponseThreshold: 500
+    maximalResponseThreshold: 3000
+    requestHeaders: null
+    requestMethod: "GET"
+    requestUrl: "https://randomfox.ca/floof/"
+    requestBody: null
+    expectedStatus: "200"

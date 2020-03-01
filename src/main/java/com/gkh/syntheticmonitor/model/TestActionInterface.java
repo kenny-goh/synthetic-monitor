@@ -3,7 +3,7 @@ package com.gkh.syntheticmonitor.model;
 import com.gkh.syntheticmonitor.exception.SyntheticTestException;
 
 
-public interface SyntheticTestActionInterface {
+public interface TestActionInterface {
 	/**
 	 *
 	 * @param context
@@ -21,7 +21,7 @@ public interface SyntheticTestActionInterface {
 	 * @param context
 	 * @throws SyntheticTestException
 	 */
-	void execute(TestExecutionContext context) throws SyntheticTestException;
+	void  execute(TestExecutionContext context) throws SyntheticTestException;
 
 	/**
 	 *

@@ -2,15 +2,17 @@ package com.gkh.syntheticmonitor.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
+//@Entity
+//@Table(name="ACTION_NOOP")
+//@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Data
 @AllArgsConstructor
 @SuperBuilder
 @Slf4j
-public class SyntheticTestActionNOOP extends AbstractSyntheticTestAction {
+public class TestActionNOOP extends AbstractTestAction {
 
 	public final static String NOOP = "NOOP";
 
@@ -18,14 +20,14 @@ public class SyntheticTestActionNOOP extends AbstractSyntheticTestAction {
 	public void execute(TestExecutionContext context) {
 		log.debug(NOOP);
 
-		ReportSyntheticTestAction stepResult = ReportSyntheticTestAction.builder()
-				.stepName(this.getName())
+		ReportTestAction stepResult = ReportTestAction.builder()
+				.name(this.getName())
 				.type(this.getType())
 				.status(NOOP)
 				.content("")
 				.build();
 
-		context.getSyntheticTestResult().getTransactionResults().add(stepResult);
+		context.getReport().getTransactionReports().add(stepResult);
 		context.setStatus(NOOP);
 		context.setContent("");
 	}

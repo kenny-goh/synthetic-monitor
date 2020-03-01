@@ -9,7 +9,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.util.StringUtils;
+
+import javax.persistence.*;
+
 
 @Data
 @AllArgsConstructor
@@ -20,29 +23,36 @@ import org.springframework.beans.factory.annotation.Value;
 		use = JsonTypeInfo.Id.NAME,
 		property = "type")
 @JsonSubTypes({
-		@JsonSubTypes.Type(value = SyntheticTestActionAPI.class, name = "TestActionAPI")
+		@JsonSubTypes.Type(value = TestActionAPI.class, name = "API")
 })
-public abstract class AbstractSyntheticTestAction implements SyntheticTestActionInterface {
+public abstract class AbstractTestAction implements TestActionInterface {
 
-	private String type;
+	@Id
 	private String name;
+	private String description;
+	private String type;
 	private boolean excludeInTestReport;
 	private String postRequestScript;
 	private String preRequestScript;
 
-	@Value("${apitransaction.optimalResponseThreshold}")
+	//@ManyToOne(
+	//		fetch = FetchType.LAZY
+	//)
+	//@JoinColumn(name = "test_name")
+	//@JsonIgnore
+	//private SyntheticTest test;
+
 	private long optimalResponseThreshold;
-	@Value("${apitransaction.maximalResponseThreshold}")
 	private long maximalResponseThreshold;
 
 	public void preExecuteScript(TestExecutionContext context) {
-		if (!this.preRequestScript.isBlank()) {
+		if (!StringUtils.isEmpty(this.preRequestScript)) {
 			log.debug("Executing pre script \"{}\"", this.preRequestScript);
 			evalGroovyScript(context, this.preRequestScript);
 		}
 	}
 	public void postExecuteScript(TestExecutionContext context) {
-		if (!this.postRequestScript.isBlank()) {
+		if (!StringUtils.isEmpty(this.postRequestScript)) {
 			log.debug("Executing post script \"{}\"", this.postRequestScript);
 			evalGroovyScript(context, this.postRequestScript);
 		}
@@ -56,9 +66,7 @@ public abstract class AbstractSyntheticTestAction implements SyntheticTestAction
 	}
 
 	@Override
-	public void resolveVariables(TestExecutionContext context) {
-
-	}
+	public void resolveVariables(TestExecutionContext context) { }
 
 
 }

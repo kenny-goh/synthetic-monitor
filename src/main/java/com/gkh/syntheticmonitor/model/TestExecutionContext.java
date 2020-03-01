@@ -6,9 +6,10 @@ import java.util.HashMap;
 
 @Data
 public class TestExecutionContext {
-	private ReportSyntheticTest syntheticTestResult = new ReportSyntheticTest();
+	private ReportTest report = new ReportTest();
 	private HashMap vars = new HashMap();
 	private String status;
 	private String content;
 	private String contentType;
+
 }
