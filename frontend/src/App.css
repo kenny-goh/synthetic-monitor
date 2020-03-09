@@ -1,0 +1,99 @@
+
+.passed-label {
+    font-weight:bold;
+    color:green
+}
+
+.warning-label {
+    font-weight:bold;
+    color: #64E424
+}
+
+
+.failed-label {
+    font-weight:bold;
+    color: red
+}
+
+.label {
+    font-weight:bold;
+}
+
+.kpi-good {
+    color:black;
+    background-color: lightgreen;
+}
+
+.kpi-warning {
+    color:black;
+    background-color: yellow
+}
+
+.kpi-bad {
+    color:yellow;
+    background-color:red
+
+}
+
+.container {
+    width: 500px;
+    vertical-align: middle
+}
+
+.item {
+    padding-left: 10px;
+    display: inline-block;
+
+}
+
+.green {
+    color: green;
+}
+
+.red {
+    color: red;
+}
+
+.pause-button {
+    color: orange;
+}
+
+.light-green {
+    color: chartreuse;
+}
+
+.warning {
+    color: yellow;
+}
+
+.light-red {
+    color: tomato;
+}
+
+.react-grid-Main{
+    height: 100%;
+}
+
+.react-grid-Container{
+    height: 100%;
+}
+
+.react-grid-Grid{
+    min-height: 100%
+}
+
+.react-grid-Canvas{
+    height: 100%
+}
+
+.container, .container-fluid {
+    margin-top: 20px;
+}
+
+.panel {
+    height:100%;
+    width:100%;
+    position: absolute;
+}
+
+

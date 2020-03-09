@@ -1,0 +1,5 @@
+FROM  openjdk:11-jdk-slim
+WORKDIR /app/
+COPY target/*.jar /app/synthetic-test-runner.jar
+ADD ./data /app/data
+ENTRYPOINT ["java", "-server", "-jar", "/app/synthetic-test-runner.jar"]
