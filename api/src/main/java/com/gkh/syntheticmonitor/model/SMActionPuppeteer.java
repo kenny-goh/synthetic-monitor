@@ -5,19 +5,16 @@ import lombok.Data;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
-//@Entity
-//@Table(name="ActionPuppeteer")
-//@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Data
 @AllArgsConstructor
 @SuperBuilder
 @Slf4j
-public class TestActionPuppeteer extends AbstractSMAction {
+public class SMActionPuppeteer extends AbstractSMAction {
 
 	public final static String PUPPETEER = "PUPPETEER";
 
 	@Override
-	public void execute(TestExecutionContext context) {
+	public void execute(SMExecutionContext context) {
 	}
 
 	@Override

@@ -1,7 +1,7 @@
 import './../App.css'
 import React, {Component} from 'react';
-import DataTable,{ createTheme } from 'react-data-table-component';
-import { GoCheck, GoX } from "react-icons/go";
+import DataTable, {createTheme} from 'react-data-table-component';
+import {GoCheck, GoX} from "react-icons/go";
 import ReportDetailsGrid from "./ReportDetailsGrid";
 import Moment from "react-moment";
 import Humanizer from 'humanize-duration-es6';

@@ -1,10 +1,10 @@
 
-[squid:S2095."DUse try-with-resources or close this "Stream" in a "finally" clause.(ë¤†þ
-csquid:S00112P"FDefine and throw a dedicated exception instead of using a generic one.(Š©íÿÿÿÿÿ
-^squid:S00112I"FDefine and throw a dedicated exception instead of using a generic one.(èüõÍ
-csquid:S00112b"FDefine and throw a dedicated exception instead of using a generic one.(Š©íÿÿÿÿÿ
-csquid:S00112V"FDefine and throw a dedicated exception instead of using a generic one.(„ðŽ˜ýÿÿÿÿ
 ?squid:S1148>"#Use a logger to log this exception.(€ÉÔ…ýÿÿÿÿ
-?squid:S1148{"#Use a logger to log this exception.(€ÉÔ…ýÿÿÿÿ
 Osquid:S47198"9Replace charset name argument with StandardCharsets.UTF_8(ÙÈ§B
-gsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(‰¬é¤øÿÿÿÿ
+^squid:S00112I"FDefine and throw a dedicated exception instead of using a generic one.(èüõÍ
+csquid:S00112a"FDefine and throw a dedicated exception instead of using a generic one.(Š©íÿÿÿÿÿ
+csquid:S00112P"FDefine and throw a dedicated exception instead of using a generic one.(Š©íÿÿÿÿÿ
+?squid:S1148z"#Use a logger to log this exception.(€ÉÔ…ýÿÿÿÿ
+csquid:S00112V"FDefine and throw a dedicated exception instead of using a generic one.(„ðŽ˜ýÿÿÿÿ
+[squid:S2095."DUse try-with-resources or close this "Stream" in a "finally" clause.(ë¤†þ
+gsquid:CommentedOutCodeLine~"<This block of commented-out lines of code should be removed.(‰¬é¤øÿÿÿÿ

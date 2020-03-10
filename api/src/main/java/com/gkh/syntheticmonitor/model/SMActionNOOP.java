@@ -5,29 +5,27 @@ import lombok.Data;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
-//@Entity
-//@Table(name="ACTION_NOOP")
-//@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+
 @Data
 @AllArgsConstructor
 @SuperBuilder
 @Slf4j
-public class TestActionNOOP extends AbstractSMAction {
+public class SMActionNOOP extends AbstractSMAction {
 
 	public final static String NOOP = "NOOP";
 
 	@Override
-	public void execute(TestExecutionContext context) {
+	public void execute(SMExecutionContext context) {
 		log.debug(NOOP);
 
-		ReportTestAction stepResult = ReportTestAction.builder()
+		ReportDetail stepResult = ReportDetail.builder()
 				.name(this.getName())
 				.type(this.getType())
 				.status(NOOP)
 				.content("")
 				.build();
 
-		context.getReport().getTransactionReports().add(stepResult);
+		context.getReport().getReportDetails().add(stepResult);
 		context.setStatus(NOOP);
 		context.setContent("");
 	}

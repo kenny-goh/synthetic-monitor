@@ -4,6 +4,7 @@ description: null
 scheduleTimeInSeconds: 300
 pauseTimeBetweenActionsMillis: 0
 type: "API"
+tags: "test env"
 active: true
 actions:
   - !<API>

@@ -1,9 +1,6 @@
 
 E
 synthetic-monitor.iml,a/1/a1aff472f7ec7d1fa70077e84d4c906b23733370
-:
-
-.gitignore,a/5/a5cc2925ca8258af241be7e5b0381edf30266302
 H
 frontend/src/App.test.js,8/2/824b503175b2d4643dca251a406e74fc8b4562e6
 F
@@ -38,12 +35,6 @@ V
 ,frontend/src/components/SyntheticTestGrid.js,a/0/a09f0374d988d1a2b10f68e2430054ae6c5c20d0
 N
 frontend/src/components/kpi.js,a/e/ae9c47d93ae7f4ef86995246d7506b78239fcf2f
-_
-/data/tests-yaml/check-team-connect-services.yml,7/7/77967d5fc0073385a8760d46b36694b478a4588f
-E
-data/backup/test1.yml,e/0/e014a198179339486e1230b35298f6e602f085fe
-E
-data/backup/test2.yml,e/a/ea7e1bf048a3b80a2530f5dfc0e011043cd4b513
 {
 Kapi/src/main/java/com/gkh/syntheticmonitor/repository/ReportRepository.java,4/b/4b29cb93c645f316dde438e5c6479b1881944f4e
 z
@@ -64,3 +55,21 @@ Kapi/src/main/java/com/gkh/syntheticmonitor/SyntheticMonitorApplication.java,4/
 Rapi/src/main/java/com/gkh/syntheticmonitor/repository/SyntheticTestRepository.java,5/9/59387f0b58551458f0a8003fe5393a3b011ffa44
 ;
 api/pom.xml,f/e/fe5c43214168bd8de1d8afa275215a8e9b9de634
+>
+api/.gitignore,2/b/2bda069e2c88cd81866580088f3a7bec6b54264c
+c
+3api/data/tests-yaml/check-team-connect-services.yml,6/b/6b5ae8d05e3cd92fa6b41c4378c64abdba514745
+p
+@api/src/main/java/com/gkh/syntheticmonitor/model/ReportTest.java,d/9/d9d5e4246bfa5445695806a785c9f387744f0c79
+v
+Fapi/src/main/java/com/gkh/syntheticmonitor/model/ReportTestAction.java,7/1/71c506e2287473bad1423839dfc37376957ef5f5
+W
+'api/data/tests-yaml/onboarding-test.yml,0/7/079220044b99f5704af3415407a78f9ca7f87137
+y
+Iapi/src/main/java/com/gkh/syntheticmonitor/model/TestActionInterface.java,e/1/e114d080be6da30d1923636750b864fd8d24b079
+s
+Capi/src/main/java/com/gkh/syntheticmonitor/model/SyntheticTest.java,6/4/640aa6d37682cf560d7bdb99e8f4da07ed362a1d
+x
+Hapi/src/main/java/com/gkh/syntheticmonitor/model/AbstractTestAction.java,6/0/60806a914f76b2f7bdb4cbe9840294ea564d4e35
+s
+Capi/src/main/java/com/gkh/syntheticmonitor/model/TestActionAPI.java,6/c/6c53827a8771d023f560b9336b927974f852123c

@@ -30,7 +30,7 @@ import java.util.concurrent.TimeUnit;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class SyntheticTest {
+public class SMTest {
 
 	public static final int DEFAULT_SCHEDULE_TIME_IN_SECONDS = 15;
 	public static final int PAUSE_TIME_BETWEEN_ACTIONS_MILLIS = 100;
@@ -39,6 +39,11 @@ public class SyntheticTest {
 	private String name;
 
 	private String description;
+
+	private String tags;
+
+	@Lob
+	private HashMap<String,String> envVariables;
 
 	private int scheduleTimeInSeconds = DEFAULT_SCHEDULE_TIME_IN_SECONDS ;
 	private int pauseTimeBetweenActionsMillis = PAUSE_TIME_BETWEEN_ACTIONS_MILLIS;
@@ -53,7 +58,7 @@ public class SyntheticTest {
 	@Convert(converter = ActionYamlConverter.class)
 	@Lob
 	@Singular
-	private List<AbstractTestAction> actions;
+	private List<AbstractSMAction> actions;
 
 	@OneToMany(cascade= CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumns(value = {
@@ -62,7 +67,7 @@ public class SyntheticTest {
 	@Fetch(FetchMode.SUBSELECT)
 	@Where(clause = "DATEDIFF('hour', timestamp, current_timestamp()) < 24")
 	@OrderBy(value = "timestamp DESC")
-	private List<ReportTest> reports;
+	private List<Report> reports;
 
 	@SneakyThrows
 	public String toYAML() {
@@ -159,20 +164,20 @@ public class SyntheticTest {
 	}
 
 
-	public static class SyntheticTestBuilder {
+	public static class SMTestBuilder {
 
 		private int scheduleTimeInSeconds = DEFAULT_SCHEDULE_TIME_IN_SECONDS;
 		private int pauseTimeBetweenActionsInSeconds= PAUSE_TIME_BETWEEN_ACTIONS_MILLIS;
 
-		public SyntheticTestBuilder getApiAction(String name,
-		                                         String url,
-		                                         HashMap headers,
-		                                         String preRequestScript,
-		                                         String postRequestScript) {
+		public SMTestBuilder getApiAction(String name,
+		                                  String url,
+		                                  HashMap headers,
+		                                  String preRequestScript,
+		                                  String postRequestScript) {
 			this.initActionsIfApplicable();
-			this.actions.add(TestActionAPI.builder()
+			this.actions.add(SMActionAPI.builder()
 					.name(name)
-					.requestMethod(TestActionAPI.METHOD_GET)
+					.requestMethod(SMActionAPI.METHOD_GET)
 					.requestUrl(url)
 					.requestHeaders(headers)
 					.preRequestScript(preRequestScript)
@@ -181,32 +186,32 @@ public class SyntheticTest {
 			return this;
 		}
 
-		public SyntheticTestBuilder getApiAction(String name,
-		                                         String url,
-		                                         String preRequestScript,
-		                                         String postRequestScript) {
+		public SMTestBuilder getApiAction(String name,
+		                                  String url,
+		                                  String preRequestScript,
+		                                  String postRequestScript) {
 			this.getApiAction(name, url, new HashMap<>(), preRequestScript, postRequestScript);
 			return this;
 		}
 
-		public SyntheticTestBuilder getApiAction(String name,
-		                                         String url) {
+		public SMTestBuilder getApiAction(String name,
+		                                  String url) {
 			log.info("***{}", this.pauseTimeBetweenActionsInSeconds);
 			this.getApiAction(name, url, new HashMap<>(), "", "");
 			return this;
 		}
 
 
-		public SyntheticTestBuilder postApiAction(String name,
-		                                          String url,
-		                                          HashMap headers,
-		                                          String body,
-		                                          String preRequestScript,
-		                                          String postRequestScript) {
+		public SMTestBuilder postApiAction(String name,
+		                                   String url,
+		                                   HashMap headers,
+		                                   String body,
+		                                   String preRequestScript,
+		                                   String postRequestScript) {
 			this.initActionsIfApplicable();
-			this.actions.add(TestActionAPI.builder()
+			this.actions.add(SMActionAPI.builder()
 					.name(name)
-					.requestMethod(TestActionAPI.METHOD_POST)
+					.requestMethod(SMActionAPI.METHOD_POST)
 					.requestUrl(url)
 					.requestHeaders(headers)
 					.requestBody(body)
@@ -216,7 +221,7 @@ public class SyntheticTest {
 			return this;
 		}
 
-		public SyntheticTestBuilder postApiAction(String name, String url, HashMap headers, String body) {
+		public SMTestBuilder postApiAction(String name, String url, HashMap headers, String body) {
 			this.postApiAction(name, url, headers, body, "","");
 			return this;
 		}
@@ -228,10 +233,18 @@ public class SyntheticTest {
 		}
 	}
 
-	public void execute(TestExecutionContext context) throws SyntheticTestException {
+	public void execute(SMExecutionContext context) throws SyntheticTestException {
 		log.info("Executing test: {}", this.getName());
 		context.getReport().setName(this.name);
 		var size = actions.size();
+
+		// Bind environment variables
+		if (this.envVariables != null) {
+			this.envVariables.forEach((key, value) -> {
+				context.getVars().put(key, value);
+			});
+		}
+
 		for (var each : actions) {
 				log.info("Firing action {}", each.getName());
 				if (each.getPrePauseTimeMillis() > 0) {
@@ -261,16 +274,16 @@ public class SyntheticTest {
 	}
 
 	@SneakyThrows
-	public static SyntheticTest fromYAML(InputStream stream)  {
+	public static SMTest fromYAML(InputStream stream)  {
 		ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
-		SyntheticTest result = mapper.readValue(stream, SyntheticTest.class);
+		SMTest result = mapper.readValue(stream, SMTest.class);
 		return result;
 	}
 
 	@SneakyThrows
-	public static SyntheticTest fromYAML(String yaml)  {
+	public static SMTest fromYAML(String yaml)  {
 		ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
-		SyntheticTest result = mapper.readValue(yaml, SyntheticTest.class);
+		SMTest result = mapper.readValue(yaml, SMTest.class);
 		return result;
 	}
 

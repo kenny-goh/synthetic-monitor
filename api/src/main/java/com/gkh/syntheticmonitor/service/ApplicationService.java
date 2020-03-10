@@ -1,8 +1,8 @@
 package com.gkh.syntheticmonitor.service;
 
-import com.gkh.syntheticmonitor.model.ReportTest;
-import com.gkh.syntheticmonitor.model.SyntheticTest;
-import com.gkh.syntheticmonitor.model.TestExecutionContext;
+import com.gkh.syntheticmonitor.model.Report;
+import com.gkh.syntheticmonitor.model.SMTest;
+import com.gkh.syntheticmonitor.model.SMExecutionContext;
 import com.gkh.syntheticmonitor.repository.ReportRepository;
 import com.gkh.syntheticmonitor.repository.SyntheticTestRepository;
 import lombok.SneakyThrows;
@@ -54,7 +54,7 @@ public class ApplicationService {
 			try {
 				log.info("Reading file {}", file.getName());
 				String data = FileUtils.readFileToString(file, "UTF-8");
-				SyntheticTest test = SyntheticTest.fromYAML(data);
+				SMTest test = SMTest.fromYAML(data);
 				test.setTimeLastExecuted(new Timestamp(System.currentTimeMillis()));
 				repository.save(test);
 			} catch (Exception e) {
@@ -65,15 +65,15 @@ public class ApplicationService {
 
 	}
 
-	public List<SyntheticTest> findAllSyntheticTests() {
+	public List<SMTest> findAllSyntheticTests() {
 		return repository.selectSyntheticTests();
 	}
 
 	@Transactional
 	public boolean toggleSyntheticTests(String testName) throws Exception {
-		Optional<SyntheticTest> optional = repository.findById(testName);
+		Optional<SMTest> optional = repository.findById(testName);
 		if (optional.isPresent()) {
-			SyntheticTest test = optional.get();
+			SMTest test = optional.get();
 			test.setActive(!test.isActive());
 			return test.isActive();
 		} else {
@@ -83,14 +83,13 @@ public class ApplicationService {
 	}
 
 	@Transactional
-	public SyntheticTest executeSyntheticTest(String testName) throws Exception {
-		Optional<SyntheticTest> optional = repository.findById(testName);
+	public SMTest executeSyntheticTest(String testName) throws Exception {
+		Optional<SMTest> optional = repository.findById(testName);
 		if (optional.isPresent()) {
-			SyntheticTest test = optional.get();
-			log.info("Firing test: {}", test.getName());
-			TestExecutionContext context = new TestExecutionContext();
+			SMTest test = optional.get();
+			SMExecutionContext context = new SMExecutionContext();
 			test.execute(context);
-			ReportTest report = context.getReport();
+			Report report = context.getReport();
 			repository.save(test);
 			reportRepository.save(report);
 			return test;
@@ -106,16 +105,16 @@ public class ApplicationService {
 
 	@Transactional
 	public void executeNextTests() {
-		List<SyntheticTest> tests = repository.selectReadyToExecuteTests();
+		List<SMTest> tests = repository.selectReadyToExecuteTests();
 		int maxSize = tests.size();
 		if (maxSize > 0) {
 			// Pick a random test
-			SyntheticTest test = tests.get(new Random().nextInt(maxSize));
+			SMTest test = tests.get(new Random().nextInt(maxSize));
 			try {
 				log.info("Firing test: {}", test.getName());
-				TestExecutionContext context = new TestExecutionContext();
+				SMExecutionContext context = new SMExecutionContext();
 				test.execute(context);
-				ReportTest report = context.getReport();
+				Report report = context.getReport();
 				test.setReadyToExecute(false);
 				reportRepository.save(report);
 			} catch (Exception e) {

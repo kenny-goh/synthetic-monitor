@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default class KPI extends React.Component {
+export default class Kpi extends React.Component {
 
     constructor(props) {
         super(props);

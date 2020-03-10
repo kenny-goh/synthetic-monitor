@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
-import AppNavbar from './app-navbar';
-import SyntheticTestGrid from "./SyntheticTestGrid";
+import AppNavBar from './AppNavBar';
+import SMTestOverviewGrid from "./SMTestOverviewGrid";
 import { Container } from 'reactstrap';
+
 
 class Home extends Component {
     render() {
         return (
             <div>
-                <AppNavbar/>
+                <AppNavBar/>
                 <Container fluid>
-                    <SyntheticTestGrid/>
+                    <SMTestOverviewGrid/>
                 </Container>
             </div>
     );

@@ -1,9 +1,10 @@
 ---
-name: "Customer Onboarding Test (Test)"
+name: "Customer Onboarding"
 description: null
 scheduleTimeInSeconds: 3600
 pauseTimeBetweenActionsMillis: 50
 type: "API"
+tags: "stage env"
 active: true
 actions:
   - !<API>

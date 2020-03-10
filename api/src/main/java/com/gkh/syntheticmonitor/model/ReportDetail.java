@@ -10,8 +10,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Builder;
 import lombok.Data;
 
-import java.util.stream.Collectors;
-
 
 @Entity
 @Data
@@ -19,7 +17,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @NoArgsConstructor
 @Access(AccessType.FIELD)
-public class ReportTestAction {
+public class ReportDetail {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -43,7 +41,7 @@ public class ReportTestAction {
 
 	@ManyToOne
 	@JsonIgnore
-	private ReportTest parent;
+	private Report parent;
 
 	@Column
 	@Access(AccessType.PROPERTY)

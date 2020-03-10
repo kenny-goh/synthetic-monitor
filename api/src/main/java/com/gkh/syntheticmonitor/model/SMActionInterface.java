@@ -3,31 +3,31 @@ package com.gkh.syntheticmonitor.model;
 import com.gkh.syntheticmonitor.exception.SyntheticTestException;
 
 
-public interface TestActionInterface {
+public interface SMActionInterface {
 	/**
 	 *
 	 * @param context
 	 */
-	void preExecuteScript(TestExecutionContext context);
+	void preExecuteScript(SMExecutionContext context);
 
 	/**
 	 *
 	 * @param context
 	 */
-	void resolveVariables(TestExecutionContext context);
+	void resolveVariables(SMExecutionContext context);
 
 	/**
 	 *
 	 * @param context
 	 * @throws SyntheticTestException
 	 */
-	void  execute(TestExecutionContext context) throws SyntheticTestException;
+	void  execute(SMExecutionContext context) throws SyntheticTestException;
 
 	/**
 	 *
 	 * @param context
 	 */
-	void postExecuteScript(TestExecutionContext context);
+	void postExecuteScript(SMExecutionContext context);
 
 	/**
 	 *

@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
-import org.springframework.cache.annotation.Cacheable;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -20,7 +19,7 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @AllArgsConstructor
 @Access(AccessType.FIELD)
-public class ReportTest {
+public class Report {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -47,18 +46,18 @@ public class ReportTest {
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
 	@JoinColumn(name = "parent_id")
 	@Fetch(FetchMode.JOIN)
-	private List<ReportTestAction> transactionReports = new ArrayList<>();
+	private List<ReportDetail> reportDetails = new ArrayList<>();
 
 	@Column
 	@Access(AccessType.PROPERTY)
 	public int getNumberOfTests() {
-		return this.transactionReports.size();
+		return this.reportDetails.size();
 	}
 
 	@Column
 	@Access(AccessType.PROPERTY)
 	public boolean isPassed() {
-		return this.transactionReports
+		return this.reportDetails
 				.stream()
 				.filter(each->each.isStatusSuccess())
 				.collect(Collectors.toList()).size() == this.getNumberOfTests();
@@ -67,43 +66,43 @@ public class ReportTest {
 	@Column
 	@Access(AccessType.PROPERTY)
 	public long getMinResponseTime() {
-		return this.transactionReports
+		return this.reportDetails
 				.stream()
-				.mapToLong(ReportTestAction::getResponseTime)
+				.mapToLong(ReportDetail::getResponseTime)
 				.summaryStatistics().getMin();
 	}
 
 	@Column
 	@Access(AccessType.PROPERTY)
 	public long getMaxResponseTime() {
-		return this.transactionReports
+		return this.reportDetails
 				.stream()
-				.mapToLong(ReportTestAction::getResponseTime)
+				.mapToLong(ReportDetail::getResponseTime)
 				.summaryStatistics().getMax();
 	}
 
 	@Column
 	@Access(AccessType.PROPERTY)
 	public long getAverageResponseTime() {
-		return (long) this.transactionReports
+		return (long) this.reportDetails
 				.stream()
-				.mapToLong(ReportTestAction::getResponseTime)
+				.mapToLong(ReportDetail::getResponseTime)
 				.summaryStatistics().getAverage();
 	}
 
 	@Column
 	@Access(AccessType.PROPERTY)
 	public long getSumResponseTime() {
-		return this.transactionReports
+		return this.reportDetails
 				.stream()
-				.mapToLong(ReportTestAction::getResponseTime)
+				.mapToLong(ReportDetail::getResponseTime)
 				.summaryStatistics().getSum();
 	}
 
 	@JsonGetter
 	public String getType() {
-		if (this.transactionReports.size() == 1) {
-			return this.transactionReports.get(0).getType();
+		if (this.reportDetails.size() == 1) {
+			return this.reportDetails.get(0).getType();
 		} else {
 			return "Transactions";
 		}
@@ -112,41 +111,41 @@ public class ReportTest {
 	@Column
 	@Access(AccessType.PROPERTY)
 	public int getNumberOfActions() {
-		return this.transactionReports.size();
+		return this.reportDetails.size();
 	}
 
 
 	@Column
 	@Access(AccessType.PROPERTY)
 	public long getSumOptimalTimeThreshold() {
-		return this.transactionReports.stream().mapToLong(o->o.getOptimalResponseThreshold()).summaryStatistics().getSum();
+		return this.reportDetails.stream().mapToLong(o->o.getOptimalResponseThreshold()).summaryStatistics().getSum();
 	}
 
 
 	@Column
 	@Access(AccessType.PROPERTY)
 	public long getSumMaxTimeThreshold() {
-		return this.transactionReports.stream().mapToLong(o->o.getMaximumResponseThreshold()).summaryStatistics().getSum();
+		return this.reportDetails.stream().mapToLong(o->o.getMaximumResponseThreshold()).summaryStatistics().getSum();
 	}
 
 
 	@Column
 	@Access(AccessType.PROPERTY)
 	public boolean isAllResponseTimeOptimal() {
-		return this.transactionReports.stream().allMatch(p->p.isResponseTimeOptimal());
+		return this.reportDetails.stream().allMatch(p->p.isResponseTimeOptimal());
 	}
 
 
 	@Column
 	@Access(AccessType.PROPERTY)
 	public boolean isAllResponseTimeUnderMax() {
-		return this.transactionReports.stream().allMatch(p->p.isResponseTimeUnderMax());
+		return this.reportDetails.stream().allMatch(p->p.isResponseTimeUnderMax());
 	}
 
 	@Column
 	@Access(AccessType.PROPERTY)
 	public boolean isAllStatusCodeMatching() {
-		return this.transactionReports.stream().allMatch(p->p.isStatusCodeMatching());
+		return this.reportDetails.stream().allMatch(p->p.isStatusCodeMatching());
 	}
 
 

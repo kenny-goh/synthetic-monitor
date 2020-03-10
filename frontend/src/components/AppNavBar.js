@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Collapse, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink } from 'reactstrap';
+import { IoMdEye } from "react-icons/io";
 
-export default class AppNavbar extends Component {
+export default class AppNavBar extends Component {
     constructor(props) {
         super(props);
         this.state = {isOpen: false};
@@ -16,7 +17,7 @@ export default class AppNavbar extends Component {
 
     render() {
         return <Navbar color="dark" dark expand="md">
-            <NavbarBrand>Synthetic Test Runner v0.1</NavbarBrand>
+            <NavbarBrand><IoMdEye color="lightBlue"/>  Synthetic Monitor (Alpha)</NavbarBrand>
             {/*<NavbarToggler onClick={this.toggle}/>*/}
             {/*<Collapse isOpen={this.state.isOpen} navbar>*/}
             {/*    <Nav className="ml-auto" navbar>*/}

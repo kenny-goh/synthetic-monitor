@@ -13,7 +13,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @AutoConfigureWireMock
 @Profile("test")
-public class SyntheticTestAPIExecutionTests extends BaseSyntheticTestSpringSupport {
+public class SMTestAPIExecutionTests extends BaseSyntheticTestSpringSupport {
 
 
 	public static final String MOCK_JSON_REQUEST = "{'data':'blah'}";
@@ -25,20 +25,20 @@ public class SyntheticTestAPIExecutionTests extends BaseSyntheticTestSpringSuppo
 
 		givenGetHelloRequestWillReturnOkay();
 
-		SyntheticTest test = this.buildSimpleGetAPITestAction();
+		SMTest test = this.buildSimpleGetAPITestAction();
 
-		TestExecutionContext context = new TestExecutionContext();
+		SMExecutionContext context = new SMExecutionContext();
 		test.execute(context);
 
 		Assertions.assertEquals(context.getStatus(),STATUS_200);
 	}
 
-	private SyntheticTest buildSimpleGetAPITestAction() {
-		return SyntheticTest.builder()
+	private SMTest buildSimpleGetAPITestAction() {
+		return SMTest.builder()
 				.name("Test")
-				.action(TestActionAPI.builder()
+				.action(SMActionAPI.builder()
 						.name("Simple test to execute GET api call")
-						.requestMethod(TestActionAPI.METHOD_GET)
+						.requestMethod(SMActionAPI.METHOD_GET)
 						.requestUrl(TEST_URL + "/hello")
 						.expectedStatus(STATUS_200)
 						.build())
@@ -51,17 +51,17 @@ public class SyntheticTestAPIExecutionTests extends BaseSyntheticTestSpringSuppo
 
 		givenGetHelloRequestWithQueryParametersWillReturnOkay();
 
-		SyntheticTest test = SyntheticTest.builder()
+		SMTest test = SMTest.builder()
 				.name("Test")
-				.action(TestActionAPI.builder()
+				.action(SMActionAPI.builder()
 						.name("Simple test to execute GET api call with query params")
-						.requestMethod(TestActionAPI.METHOD_GET)
+						.requestMethod(SMActionAPI.METHOD_GET)
 						.requestUrl(TEST_URL + "/hello?param1=foo&param2=bar")
 						.expectedStatus(STATUS_200)
 						.build())
 				.build();
 
-		TestExecutionContext context = new TestExecutionContext();
+		SMExecutionContext context = new SMExecutionContext();
 		test.execute(context);
 
 		Assertions.assertEquals(context.getStatus(),STATUS_200);
@@ -73,11 +73,11 @@ public class SyntheticTestAPIExecutionTests extends BaseSyntheticTestSpringSuppo
 
 		givenPostRequestWillReturnExpectedMockedResult();
 
-		SyntheticTest test = SyntheticTest.builder()
+		SMTest test = SMTest.builder()
 				.name("Test")
-				.action(TestActionAPI.builder()
+				.action(SMActionAPI.builder()
 						.name("Simple test to execute POST api call")
-						.requestMethod(TestActionAPI.METHOD_POST)
+						.requestMethod(SMActionAPI.METHOD_POST)
 						.requestUrl(TEST_URL + "/submit-data")
 						.requestHeader(HTTP.CONTENT_TYPE, APPLICATION_JSON_VALUE)
 						.requestBody(MOCK_JSON_REQUEST)
@@ -85,7 +85,7 @@ public class SyntheticTestAPIExecutionTests extends BaseSyntheticTestSpringSuppo
 						.build())
 				.build();
 
-		TestExecutionContext context = new TestExecutionContext();
+		SMExecutionContext context = new SMExecutionContext();
 		test.execute(context);
 
 		Assertions.assertEquals(context.getStatus(),STATUS_200);
@@ -97,9 +97,9 @@ public class SyntheticTestAPIExecutionTests extends BaseSyntheticTestSpringSuppo
 
 		givenGetHelloRequestWillReturnOkay();
 
-		SyntheticTest test = buildSimpleGetAPITestAction();
+		SMTest test = buildSimpleGetAPITestAction();
 
-		TestExecutionContext context = new TestExecutionContext();
+		SMExecutionContext context = new SMExecutionContext();
 		test.execute(context);
 
 		Assertions.assertEquals(context.getStatus(),STATUS_200);
@@ -111,10 +111,10 @@ public class SyntheticTestAPIExecutionTests extends BaseSyntheticTestSpringSuppo
 
 		givenGetHelloRequestWillReturnOkay();
 
-		SyntheticTest test = this.buildSimpleGetAPITestAction();
+		SMTest test = this.buildSimpleGetAPITestAction();
 		test.getActions().get(0).setPostRequestScript("context.vars.put('var1', context.status)");
 
-		TestExecutionContext context = new TestExecutionContext();
+		SMExecutionContext context = new SMExecutionContext();
 		test.execute(context);
 
 		Assertions.assertEquals(context.getStatus(), STATUS_200);
@@ -127,18 +127,18 @@ public class SyntheticTestAPIExecutionTests extends BaseSyntheticTestSpringSuppo
 
 		givenGetHelloRequestWillReturnOkay();
 
-		SyntheticTest test = SyntheticTest.builder()
+		SMTest test = SMTest.builder()
 				.name("Test")
-				.action(TestActionAPI.builder()
+				.action(SMActionAPI.builder()
 						.name("Simple test to execute GET api call with pre request script")
-						.requestMethod(TestActionAPI.METHOD_GET)
+						.requestMethod(SMActionAPI.METHOD_GET)
 						.requestUrl(TEST_URL + "/{var1}")
 						.expectedStatus(STATUS_200)
 						.preRequestScript("context.vars.put('var1','hello')")
 						.build())
 				.build();
 
-		TestExecutionContext context = new TestExecutionContext();
+		SMExecutionContext context = new SMExecutionContext();
 		test.execute(context);
 		Assertions.assertEquals(context.getStatus(), STATUS_200);
 	}

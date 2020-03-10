@@ -21,7 +21,7 @@ public class YamlTests extends BaseSyntheticTestSpringSupport {
 	@SneakyThrows
 	public void givenValidYamlCanConvertToPojo() {
 		InputStream stream = this.getClass().getClassLoader().getResourceAsStream("test1.yaml");
-		SyntheticTest test = SyntheticTest.fromYAML(stream);
+		SMTest test = SMTest.fromYAML(stream);
 		Assertions.assertEquals(test.getName(),"Test");
 		Assertions.assertEquals(test.getActions().get(0).getName(),"Simple test to execute POST api call");
 	}
@@ -30,11 +30,11 @@ public class YamlTests extends BaseSyntheticTestSpringSupport {
 	@SneakyThrows
 	public void givenValidPojoCanConvertToYaml() {
 
-		SyntheticTest test = SyntheticTest.builder()
+		SMTest test = SMTest.builder()
 				.name("Test")
-				.action(TestActionAPI.builder()
+				.action(SMActionAPI.builder()
 						.name("Simple test to execute POST api call")
-						.requestMethod(TestActionAPI.METHOD_POST)
+						.requestMethod(SMActionAPI.METHOD_POST)
 						.requestUrl(TEST_URL + "/submit-data")
 						.requestHeaders(new HashMap<String, String>() {{
 							put(HTTP.CONTENT_TYPE, APPLICATION_JSON_VALUE);
@@ -51,7 +51,7 @@ public class YamlTests extends BaseSyntheticTestSpringSupport {
 	}
 
 	public String loadYamlFromFile() {
-		InputStream inputStream = SyntheticTest.class
+		InputStream inputStream = SMTest.class
 				.getClassLoader()
 				.getResourceAsStream("test1.yaml");
 

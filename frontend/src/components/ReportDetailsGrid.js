@@ -1,8 +1,8 @@
 import './../App.css'
 import React, {Component} from 'react';
 import DataTable, {createTheme} from 'react-data-table-component';
-import { GoCheck, GoX } from "react-icons/go";
-import {  IoMdCloudy, IoMdCog } from "react-icons/io";
+import {GoCheck, GoX} from "react-icons/go";
+import {IoMdCloudy} from "react-icons/io";
 
 
 createTheme('darkGrey', {
@@ -94,7 +94,7 @@ class ReportDetailsGrid extends Component {
         console.log('ReportsGrid Constructor')
         super(props)
         this.state = {
-            data: props.data.transactionReports
+            data: props.data.reportDetails
         }
     }
 
@@ -110,7 +110,7 @@ class ReportDetailsGrid extends Component {
                 sortable: true,
                 cell: row=><TypeColumn row={row} /> },
             {   name: 'Details',
-                width: "600px",
+                width:"600px",
                 selector: 'details',
                 sortable: true },
             {   name: "Status",

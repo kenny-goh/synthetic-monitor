@@ -2,12 +2,9 @@ package com.gkh.syntheticmonitor.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.gkh.syntheticmonitor.exception.SyntheticTestException;
-import groovy.lang.Binding;
-import groovy.lang.GroovyShell;
 import groovy.lang.Writable;
 import groovy.text.SimpleTemplateEngine;
 import groovy.text.Template;
-import groovy.text.TemplateEngine;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
@@ -24,15 +21,13 @@ import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
 
-//@Entity
-//@Table(name="ACTION_API")
-//@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
 @Slf4j
-public class TestActionAPI extends AbstractTestAction {
+public class SMActionAPI extends AbstractSMAction {
 
 	public final static String API = "API";
 	public final static String METHOD_GET = "GET";
@@ -53,7 +48,7 @@ public class TestActionAPI extends AbstractTestAction {
 
 	@Override
 	@SneakyThrows
-	public void resolveVariables(TestExecutionContext context) {
+	public void resolveVariables(SMExecutionContext context) {
 		this.expandedUrl =  UriComponentsBuilder.fromHttpUrl(this.requestUrl)
 				.buildAndExpand(context.getVars())
 				.toUriString();
@@ -72,7 +67,7 @@ public class TestActionAPI extends AbstractTestAction {
 	}
 
 	@Override
-	public void execute(TestExecutionContext context) throws SyntheticTestException {
+	public void execute(SMExecutionContext context) throws SyntheticTestException {
 
 
 		RestTemplate restTemplate = new RestTemplate();
@@ -104,7 +99,7 @@ public class TestActionAPI extends AbstractTestAction {
 			responseTime = Duration.between(start, finish).toMillis();
 		}
 
-		ReportTestAction actionReport = ReportTestAction.builder()
+		ReportDetail actionReport = ReportDetail.builder()
 		.name(this.getName())
 		.details(this.getRequestMethod() + " " + this.requestUrl)
 		.type(this.getType())
@@ -116,7 +111,7 @@ public class TestActionAPI extends AbstractTestAction {
 		.responseTime(responseTime)
 		.build();
 
-		context.getReport().getTransactionReports().add(actionReport);
+		context.getReport().getReportDetails().add(actionReport);
 		context.setContent(content);
 		context.setStatus(status);
 

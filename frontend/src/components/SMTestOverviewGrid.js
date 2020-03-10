@@ -2,7 +2,14 @@ import './../App.css'
 import React, {Component} from 'react';
 import DataTable from 'react-data-table-component';
 import {GoCheck} from "react-icons/go";
-import {IoIosCheckmarkCircle, IoIosCloseCircle, IoIosPlay, IoMdCloudy, IoMdCog, IoIosRefreshCircle} from "react-icons/io";
+import {
+    IoIosCheckmarkCircle,
+    IoIosCloseCircle,
+    IoIosPlay,
+    IoIosRefreshCircle,
+    IoMdCloudy,
+    IoMdCog
+} from "react-icons/io";
 import {makeStyles} from '@material-ui/core/styles';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import axios from 'axios';
@@ -13,7 +20,7 @@ import {VerticalBarSeries, XYPlot,} from 'react-vis'
 import ReportsGrid from "./ReportsGrid";
 import Moment from "react-moment";
 import ToggleButton from 'react-toggle-button'
-import KPI from './kpi'
+import Kpi from './Kpi'
 import Humanizer from 'humanize-duration-es6';
 
 const shortEnLocale = {
@@ -46,13 +53,13 @@ const LinearIndeterminate = () => {
     );
 };
 
-const enableDisableSyntheticTest = (row, synthetictestgrid) => {
+const enableDisableSMTest = (row, smTestOverviewGrid) => {
     axios.post('http://localhost:8080/toggle_synthetic_test',
         null,
         {params: {testName: row.name}})
         .then(function (success) {
             let value = success.data
-            synthetictestgrid.updateActiveFlag(row.name, value)
+            smTestOverviewGrid.updateActiveFlag(row.name, value)
         })
         .catch(function (error) {
             alert(error)
@@ -60,23 +67,23 @@ const enableDisableSyntheticTest = (row, synthetictestgrid) => {
 }
 
 
-const ToggleEnableButton = ({row, synthetictestgrid}) => (
+const ToggleEnableButton = ({row, smTestOverviewGrid}) => (
     <ToggleButton
         inactiveLabel={"OFF"}
         activeLabel={<GoCheck/>}
         value={row.active || false}
         onToggle={(value) => {
-            enableDisableSyntheticTest(row, synthetictestgrid)
+            enableDisableSMTest(row, smTestOverviewGrid)
         }}/>
 );
 
-const runNow = (row, synthetictestgrid) => {
+const runNow = (row, smTestOverviewGrid) => {
         axios.post('http://localhost:8080/execute_synthetic_test',
             null,
             {params: {testName: row.name}})
             .then(function (success) {
                 let value = success.data
-                synthetictestgrid.updateRow(row.name, value)
+                smTestOverviewGrid.updateRow(row.name, value)
             })
             .catch(function (error) {
                 alert(error)
@@ -84,8 +91,8 @@ const runNow = (row, synthetictestgrid) => {
     }
 ;
 
-const RunButton = ({row, synthetictestgrid}) => (
-    <button type="button" title="Run test now" onClick={() => runNow(row, synthetictestgrid)} ><IoIosPlay/></button>
+const RunButton = ({row, smTestOverviewGrid}) => (
+    <button type="button" title="Run test now" onClick={() => runNow(row, smTestOverviewGrid)} ><IoIosPlay/></button>
 );
 
 const LastExecutedTimeColumn = ({row}) => (
@@ -136,7 +143,7 @@ const Label = ({labelName, className, value}) =>
 /**
  *
  */
-class SyntheticTestGrid extends Component {
+class SMTestOverviewGrid extends Component {
 
     constructor() {
         super()
@@ -330,6 +337,12 @@ class SyntheticTestGrid extends Component {
                 cell: row => <TypeColumn row={row}/>
             },
             {
+                name: 'Tags',
+                width: "100px",
+                selector: 'tags',
+                sortable: true,
+            },
+            {
                 name: 'Last Results',
                 minWidth: "150px",
                 selector: 'lastResults',
@@ -366,8 +379,8 @@ class SyntheticTestGrid extends Component {
                 sortable: true,
                 cell: row => <LastExecutedTimeColumn row={row}/>
             },
-            {name: 'Enable', button: true, cell: row => <ToggleEnableButton row={row} synthetictestgrid={this}/>},
-            {name: '', button: true, cell: (row) => <RunButton row={row} synthetictestgrid={this}/>},
+            {name: 'Enable', button: true, cell: row => <ToggleEnableButton row={row} smTestOverviewGrid={this}/>},
+            {name: '', button: true, cell: (row) => <RunButton row={row} smTestOverviewGrid={this}/>},
         ]
 
 
@@ -376,8 +389,8 @@ class SyntheticTestGrid extends Component {
                 <Container fluid>
                     <Row>
                         <Col md={{span: 1, offset: 0}}>
-                            <div className="container"><KPI className="ml-2 label" label={"Success ratio:"}
-                                                            value={this.state.kpiAverage}></KPI></div>
+                            <div className="container"><Kpi className="ml-2 label" label={"Success ratio:"}
+                                                            value={this.state.kpiAverage}></Kpi></div>
                         </Col>
                         <Col><Label labelName={"Passed"} className={"passed-label"}
                                     value={this.state.totalTestsPassed}/></Col>
@@ -425,4 +438,4 @@ class SyntheticTestGrid extends Component {
     }
 }
 
-export default SyntheticTestGrid;
+export default SMTestOverviewGrid;

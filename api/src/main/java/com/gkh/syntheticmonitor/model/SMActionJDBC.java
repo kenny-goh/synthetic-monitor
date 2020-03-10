@@ -4,12 +4,9 @@ package com.gkh.syntheticmonitor.model;
 import lombok.Data;
 import lombok.experimental.SuperBuilder;
 
-//@Entity
-//@Table(name="ACTION_JDBC")
-//@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Data
 @SuperBuilder
-public class TestActionJDBC extends AbstractSMAction {
+public class SMActionJDBC extends AbstractSMAction {
 
 	public final static String JDBC = "JDBC";
 
@@ -19,7 +16,7 @@ public class TestActionJDBC extends AbstractSMAction {
 	private String password;
 
 	@Override
-	public void execute(TestExecutionContext context) {
+	public void execute(SMExecutionContext context) {
 		// todo
 	}
 

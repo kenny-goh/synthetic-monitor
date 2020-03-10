@@ -2,7 +2,6 @@ package com.gkh.syntheticmonitor.model;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.gkh.syntheticmonitor.exception.SyntheticTestException;
 import groovy.lang.Binding;
 import groovy.lang.GroovyShell;
 import lombok.AllArgsConstructor;
@@ -24,9 +23,9 @@ import javax.persistence.*;
 		use = JsonTypeInfo.Id.NAME,
 		property = "type")
 @JsonSubTypes({
-		@JsonSubTypes.Type(value = TestActionAPI.class, name = "API")
+		@JsonSubTypes.Type(value = SMActionAPI.class, name = "API")
 })
-public abstract class AbstractTestAction implements TestActionInterface {
+public abstract class AbstractSMAction implements SMActionInterface {
 
 	@Id
 	private String name;
@@ -41,20 +40,20 @@ public abstract class AbstractTestAction implements TestActionInterface {
 	private transient long prePauseTimeMillis;
 	private transient long postPauseTimeMillis;
 
-	public void preExecuteScript(TestExecutionContext context) {
+	public void preExecuteScript(SMExecutionContext context) {
 		if (!StringUtils.isEmpty(this.preRequestScript)) {
 			log.debug("Executing pre script \"{}\"", this.preRequestScript);
 			evalGroovyScript(context, this.preRequestScript);
 		}
 	}
-	public void postExecuteScript(TestExecutionContext context) {
+	public void postExecuteScript(SMExecutionContext context) {
 		if (!StringUtils.isEmpty(this.postRequestScript)) {
 			log.debug("Executing post script \"{}\"", this.postRequestScript);
 			evalGroovyScript(context, this.postRequestScript);
 		}
 	}
 
-	private void evalGroovyScript(TestExecutionContext context, String script) {
+	private void evalGroovyScript(SMExecutionContext context, String script) {
 		Binding binding = new Binding();
 		binding.setVariable("context", context);
 		GroovyShell shell = new GroovyShell(binding);
@@ -62,7 +61,7 @@ public abstract class AbstractTestAction implements TestActionInterface {
 	}
 
 	@Override
-	public void resolveVariables(TestExecutionContext context) { }
+	public void resolveVariables(SMExecutionContext context) { }
 
 
 }
