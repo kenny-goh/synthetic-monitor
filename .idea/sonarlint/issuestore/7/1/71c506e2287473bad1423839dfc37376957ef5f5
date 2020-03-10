@@ -1,7 +1,0 @@
-
-asquid:UselessImportCheck"8Remove this unused import 'java.util.stream.Collectors'.(Óóº´úÿÿÿÿ
-Gsquid:S2065$"0Remove the "transient" modifier from this field.(‰Ì
-Gsquid:S2065%"0Remove the "transient" modifier from this field.(‘‚é‚
-Lsquid:S2065&"0Remove the "transient" modifier from this field.(¿¾Ã„úÿÿÿÿ
-Lsquid:S2065*"0Remove the "transient" modifier from this field.(¿Ò£üÿÿÿÿ
-‚squid:S21783"fCorrect this "&" to "&&" and extract the right operand to a variable if it should always be evaluated.(Øášçúÿÿÿÿ

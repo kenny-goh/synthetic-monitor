@@ -1,8 +1,0 @@
-
-zsquid:UselessImportCheck"LRemove this unused import 'org.springframework.scheduling.annotation.Async'.(έλ€Ϋϊÿÿÿÿ8”µ.
-[squid:UselessImportCheck"-Remove this unused import 'java.util.Random'.(θψΙ›ωÿÿÿÿ8µγκλ‹.
-ƒsquid:UselessImportCheck"URemove this unused import 'org.springframework.transaction.annotation.Transactional'.(πωηψωÿÿÿÿ8Σνλ‹.
-rsquid:UselessImportCheck"IRemove this unused import 'com.gkh.syntheticmonitor.model.SyntheticTest'.(ΛαΫΜ8µγκλ‹.
-tsquid:UselessImportCheck"FRemove this unused import 'com.gkh.syntheticmonitor.model.ReportTest'.(ξΓθϋÿÿÿÿ8µγκλ‹.
-~squid:UselessImportCheck"PRemove this unused import 'com.gkh.syntheticmonitor.model.TestExecutionContext'.(Οί–°ύÿÿÿÿ8µγκλ‹.
-Ysquid:UselessImportCheck"+Remove this unused import 'java.util.List'.(Υλ±Δψÿÿÿÿ8µγκλ‹.

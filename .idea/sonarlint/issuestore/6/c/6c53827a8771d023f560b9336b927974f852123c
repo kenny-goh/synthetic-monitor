@@ -1,14 +1,0 @@
-
-Asquid:S1659U"%Declare "content" on a separate line.(Õ‚õÿÿÿÿÿ
-osquid:ModifiersOrderCheck)"EReorder the modifiers to comply with the Java Language Specification.(û‰€úÿÿÿÿ
-Ysquid:UselessImportCheck"0Remove this unused import 'groovy.lang.Binding'.(ÿ‰ªÅúÿÿÿÿ
-[squid:S1134@"DTake the required action to fix the issue indicated by this comment.(ôèå
-`squid:UselessImportCheck
-"7Remove this unused import 'groovy.text.TemplateEngine'.(ÑÓúªúÿÿÿÿ
-]squid:UselessImportCheck"4Remove this unused import 'groovy.lang.GroovyShell'.(°ˆÍ‹úÿÿÿÿ
-jsquid:ModifiersOrderCheck'"EReorder the modifiers to comply with the Java Language Specification.(…„“´
-osquid:ModifiersOrderCheck%"EReorder the modifiers to comply with the Java Language Specification.(øÎüûÿÿÿÿ
-osquid:ModifiersOrderCheck&"EReorder the modifiers to comply with the Java Language Specification.(ğ‡ŸŒşÿÿÿÿ
-osquid:ModifiersOrderCheck("EReorder the modifiers to comply with the Java Language Specification.(öŸÏøÿÿÿÿ
-Gsquid:S20654"0Remove the "transient" modifier from this field.(èèşë
-Ssquid:S20650"0Remove the "transient" modifier from this field.(µ«úÆşÿÿÿÿ8¨†ÿø‹.
