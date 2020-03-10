@@ -1,0 +1,21 @@
+
+Hsquid:S1612?",Replace this lambda with a method reference.(»ßÄâùÿÿÿÿ
+Hsquid:S1612z",Replace this lambda with a method reference.(Õ‘Ÿèıÿÿÿÿ
+Csquid:S1612",Replace this lambda with a method reference.(°İÍ
+Isquid:S1612ˆ",Replace this lambda with a method reference.(á¥ê“ıÿÿÿÿ
+Isquid:S1612",Replace this lambda with a method reference.(ÕÈÍ¿şÿÿÿÿ
+Dsquid:S1612•",Replace this lambda with a method reference.(ïÙÏá
+osquid:UselessImportCheck
+"KRemove this unused import 'org.springframework.cache.annotation.Cacheable'.(İºØ“
+Gsquid:S2065"0Remove the "transient" modifier from this field.(¬‰öñ
+Gsquid:S2065 "0Remove the "transient" modifier from this field.(’£«„
+Gsquid:S2065!"0Remove the "transient" modifier from this field.(ˆñ÷ó
+Lsquid:S2065""0Remove the "transient" modifier from this field.(âë¿Ùıÿÿÿÿ
+Lsquid:S2065#"0Remove the "transient" modifier from this field.(ÖÜ¦Œüÿÿÿÿ
+Gsquid:S2065$"0Remove the "transient" modifier from this field.(¸¹‡½
+Lsquid:S2065%"0Remove the "transient" modifier from this field.(î»Íèùÿÿÿÿ
+Gsquid:S2065&"0Remove the "transient" modifier from this field.(„ü‚ú
+Lsquid:S2065'"0Remove the "transient" modifier from this field.(Çôğ£şÿÿÿÿ
+Gsquid:S2065("0Remove the "transient" modifier from this field.(…€¶›
+Gsquid:S2065)"0Remove the "transient" modifier from this field.(ßË…Æ
+Lsquid:S2065*"0Remove the "transient" modifier from this field.(á·„ûÿÿÿÿÿ

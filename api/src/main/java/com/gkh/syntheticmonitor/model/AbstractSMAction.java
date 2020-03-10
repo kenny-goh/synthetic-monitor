@@ -2,6 +2,7 @@ package com.gkh.syntheticmonitor.model;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.gkh.syntheticmonitor.exception.SyntheticTestException;
 import groovy.lang.Binding;
 import groovy.lang.GroovyShell;
 import lombok.AllArgsConstructor;

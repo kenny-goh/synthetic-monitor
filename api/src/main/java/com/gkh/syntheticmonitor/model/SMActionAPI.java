@@ -45,34 +45,35 @@ public class TestActionAPI extends AbstractTestAction {
 	private String requestMethod;
 	private String requestUrl;
 	private String requestBody;
+	private transient String requestBodyExpanded;
 	private String expectedStatus;
 
 	@JsonIgnore
 	private transient String expandedUrl;
 
-
 	@Override
 	@SneakyThrows
 	public void resolveVariables(TestExecutionContext context) {
-		//UriTemplate template = new UriTemplate(this.requestUrl);
-		//this.expandedUrl = template.expand(context.getVars()).toString();
 		this.expandedUrl =  UriComponentsBuilder.fromHttpUrl(this.requestUrl)
 				.buildAndExpand(context.getVars())
 				.toUriString();
+
+		log.info("Expanded URL {}", this.expandedUrl);
 
 		if (this.requestBody != null && this.requestBody.contains("$")) {
 			// Fixme: put this to abstract class
 			SimpleTemplateEngine engine = new groovy.text.SimpleTemplateEngine();
 			Template template = engine.createTemplate(this.requestBody);
 			Writable textTemplate = template.make(context.getVars());
-			this.requestBody  = textTemplate.toString();
+			this.requestBodyExpanded  = textTemplate.toString();
+		} else {
+			this.requestBodyExpanded = this.requestBody;
 		}
 	}
 
 	@Override
 	public void execute(TestExecutionContext context) throws SyntheticTestException {
 
-		log.info("Firing action {}", this.getName());
 
 		RestTemplate restTemplate = new RestTemplate();
 		HttpHeaders httpHeaders = new HttpHeaders();
@@ -85,7 +86,7 @@ public class TestActionAPI extends AbstractTestAction {
 		long responseTime = 0;
 		Instant start = Instant.now();
 		try {
-			HttpEntity entity = new HttpEntity(this.requestBody, httpHeaders);
+			HttpEntity entity = new HttpEntity(this.requestBodyExpanded, httpHeaders);
 			HttpMethod httpMethod = getHttpMethod(requestMethod);
 
 			ResponseEntity<String> response = restTemplate.exchange(this.expandedUrl, httpMethod, entity, String.class);
@@ -94,7 +95,7 @@ public class TestActionAPI extends AbstractTestAction {
 			content = response.getBody();
 
 			log.info("Status: {}", status);
-			log.debug("Content: {}", content);
+			log.info("Content: {}", content);
 		} catch (ResourceAccessException e ) {
 			status = "TIMEOUT";
 			content = e.getMessage();

@@ -12,7 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 @AllArgsConstructor
 @SuperBuilder
 @Slf4j
-public class TestActionPuppeteer extends AbstractTestAction {
+public class TestActionPuppeteer extends AbstractSMAction {
 
 	public final static String PUPPETEER = "PUPPETEER";
 

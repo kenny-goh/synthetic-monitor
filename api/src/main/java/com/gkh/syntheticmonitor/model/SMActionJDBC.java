@@ -9,7 +9,7 @@ import lombok.experimental.SuperBuilder;
 //@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Data
 @SuperBuilder
-public class TestActionJDBC extends AbstractTestAction {
+public class TestActionJDBC extends AbstractSMAction {
 
 	public final static String JDBC = "JDBC";
 

@@ -1,0 +1,16 @@
+
+Hsquid:S1612M",Replace this lambda with a method reference.(ÎÙÌÿÿÿÿÿ
+†squid:S1319­"oThe type of the "headers" object should be an interface such as "Map" rather than the implementation "HashMap".(îÖœb
+Zsquid:S1155L">Use isEmpty() to check whether the collection is empty or not.(¼ÍÎØûÿÿÿÿ
+Zsquid:S1155}">Use isEmpty() to check whether the collection is empty or not.(¼ÍÎØûÿÿÿÿ
+Hsquid:S1612h",Replace this lambda with a method reference.(¤ììîıÿÿÿÿ
+†squid:S1319Î"oThe type of the "headers" object should be an interface such as "Map" rather than the implementation "HashMap".(îÖœb
+[squid:S1155™">Use isEmpty() to check whether the collection is empty or not.(¼ÍÎØûÿÿÿÿ
+Vsquid:S1068¨"9Remove this unused "scheduleTimeInSeconds" private field.( ‹¼±ÿÿÿÿÿ
+‡squid:S1319ß"oThe type of the "headers" object should be an interface such as "Map" rather than the implementation "HashMap".(ª²¤ 
+Hsquid:S1612x",Replace this lambda with a method reference.(õ‰èşÿÿÿÿ
+@squid:S1148‡"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ
+[squid:S1155…">Use isEmpty() to check whether the collection is empty or not.(¼ÍÎØûÿÿÿÿ
+Csquid:S1612]",Replace this lambda with a method reference.(ÌÓöä
+^squid:S2142†"FEither re-interrupt this method or rethrow the "InterruptedException".(ä ¹€
+Csquid:S1612X",Replace this lambda with a method reference.(ÀÖ¶—

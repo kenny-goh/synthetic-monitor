@@ -385,7 +385,7 @@ class SyntheticTestGrid extends Component {
                                     value={this.state.totalTestsNotMatchStatusCode}/></Col>
                         <Col><Label labelName={"Fast time"} className={"passed-label"}
                                     value={this.state.totalTestsOptimalResponseTime}/></Col>
-                        <Col><Label labelName={"Ok time"} className={"warning-label"}
+                        <Col><Label labelName={"OK time"} className={"warning-label"}
                                     value={this.state.totalTestsUnderMaxResponseTime}/></Col>
                         <Col><Label labelName={"Slow time"} className={"failed-label"}
                                     value={this.state.totalTestsOverMaxResponseTime}/></Col>

@@ -12,7 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 @AllArgsConstructor
 @SuperBuilder
 @Slf4j
-public class TestActionNOOP extends AbstractTestAction {
+public class TestActionNOOP extends AbstractSMAction {
 
 	public final static String NOOP = "NOOP";
 

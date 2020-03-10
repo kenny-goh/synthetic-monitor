@@ -78,9 +78,7 @@ public class SyntheticTest {
 			long total = this.reports.size();
 			return ((passed * 1.0) / (total * 1.0)) * 100;
 		}
-		else {
-			return 100.0;
-		}
+		return 100.0;
 	}
 
 	@JsonGetter
@@ -140,8 +138,6 @@ public class SyntheticTest {
 	public double getTotalRuns() {
 		return this.reports.size();
 	}
-
-
 
 	@JsonGetter
 	public int getNumberOfActions() {
@@ -233,10 +229,11 @@ public class SyntheticTest {
 	}
 
 	public void execute(TestExecutionContext context) throws SyntheticTestException {
+		log.info("Executing test: {}", this.getName());
 		context.getReport().setName(this.name);
 		var size = actions.size();
 		for (var each : actions) {
-			log.debug("Executing action {}", each.getName());
+				log.info("Firing action {}", each.getName());
 				if (each.getPrePauseTimeMillis() > 0) {
 					sleep(each.getPrePauseTimeMillis());
 				}
