@@ -33,7 +33,7 @@ public class ApplicationService {
 	@Autowired
 	private ReportRepository reportRepository;
 
-	@Value("${app.settings.bootstrap_yaml_path}")
+	@Value("${app.settings.tests_yaml_path}")
 	private String bootstrapYamlPath;
 
 	@Transactional

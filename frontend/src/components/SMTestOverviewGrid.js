@@ -326,7 +326,7 @@ class SMTestOverviewGrid extends Component {
                 sortable: true,
                 cell: row => <StatusColumn row={row}/>},
             {   name: 'Name',
-                width: "300px",
+                width: "250px",
                 selector: 'name',
                 sortable: true},
             {
@@ -350,20 +350,20 @@ class SMTestOverviewGrid extends Component {
             },
             {
                 name: '24H ratio',
-                minWidth: "50px",
+                width: "90px",
                 selector: 'ratio24Hour',
                 sortable: true,
                 format: row => `${row.ratio24Hour.toFixed(2)}%`
             },
             {
                 name: 'Avg Sum. Time',
-                width: "200px",
+                width: "100px",
                 selector: 'averageResponseTime',
                 sortable: true,
                 cell: row => <AverageResponseTimeColumn row={row}/>
             },
             {   name: 'Schedule',
-                width: "150px",
+                width: "100px",
                 selector: 'scheduleTimeInSeconds',
                 sortable: true,
                 format: row => `${h.humanize(row.scheduleTimeInSeconds*1000)}`
@@ -374,7 +374,7 @@ class SMTestOverviewGrid extends Component {
                 sortable: true},
             {
                 name: 'Last Run Time',
-                minWidth: "150px",
+                minWidth: "180px",
                 selector: 'lastExecutedTime',
                 sortable: true,
                 cell: row => <LastExecutedTimeColumn row={row}/>
