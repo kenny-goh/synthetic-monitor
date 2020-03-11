@@ -1,5 +1,7 @@
 # synthetic-monitor
 A simple tool for synthetic monitoring and testing
 
-![Overview screen](screenshot1.PNG)
+
+
+![Overview screen](screenshot1.png)
 
