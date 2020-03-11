@@ -6,8 +6,10 @@ The synthetic-monitor YAML tests currently supports the following:
 - Can be invoked via scheduler, directly via API or the web-based front end 
 - Tests can be loaded from files, and can be managed via API or the web-based frontend
 - Each synthetic-monitor test can have one or more synthentic test actions 
-- The following test actions are currently supported:
-  - API calls (GET, POST, PUSH, DELETE) 
+- The following test actions are planned to be supported
+  - API action (GET, POST, PUSH, DELETE) 
+  - SQL action (SQL query on JDBC compliant databases)
+  - Puppeteer action
 
 ![Overview screen](screenshot1.png)
 
