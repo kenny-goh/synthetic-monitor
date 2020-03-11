@@ -1,7 +1,6 @@
 # synthetic-monitor
-A simple tool for synthetic monitoring and testing
 
-
+A simple tool for synthetic monitoring and testing using YAML configuration files to orchestrate the tests. The main advantage of this approach is you don't need to code custom scripts to run synthetic tests, instead you describe the tests using simple to understand YAML structure and let the synthetic-monitor engine do the heavy lifting. 
 
 ![Overview screen](screenshot1.png)
 
