@@ -1,6 +1,6 @@
 # synthetic-monitor
 
-A simple tool for synthetic monitoring and testing using YAML files to orchestrate the tests. The main advantage of this approach is that you don't need to code custom scripts to run synthetic tests, instead you describe the tests declaratively using simple to understand YAML and let the synthetic-monitor engine do the heavy lifting. 
+A simple tool for synthetic monitoring using YAML files to orchestrate the tests. The main advantage of this approach is that you don't need to code custom scripts to run synthetic tests, instead you describe the tests declaratively using simple to understand YAML and let the synthetic-monitor engine do the heavy lifting. 
 
 The synthetic-monitor tests currently supports the following:
 - Can be invoked via scheduler, directly via API or the web-based front end 
