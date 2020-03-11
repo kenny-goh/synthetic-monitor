@@ -1,10 +1,9 @@
 # synthetic-monitor
 
-A simple tool for synthetic monitoring and testing using YAML configuration files to orchestrate the tests. The main advantage of this approach is you don't need to code custom scripts to run synthetic tests, instead you describe the tests using simple to understand YAML structure and let the synthetic-monitor engine do the heavy lifting. 
+A simple tool for synthetic monitoring and testing using YAML files to orchestrate the tests. The main advantage of this approach is you don't need to code custom scripts to run synthetic tests, instead you describe the tests declaratively using simple to understand YAML structure and let the synthetic-monitor engine do the heavy lifting. 
 
 The synthetic-monitor YAML tests currently supports the following actions:
-- API action (GET,POST,PUSH,DELETE)
-- Puppeteer Scripts
+- API action (GET, POST, PUSH, DELETE)
 
 ![Overview screen](screenshot1.png)
 
