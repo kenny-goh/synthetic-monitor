@@ -31,4 +31,5 @@ build/
 .vscode/
 /.mvn/
 
-/data/**
+/data/tests-yaml/**
+/data/h2/**

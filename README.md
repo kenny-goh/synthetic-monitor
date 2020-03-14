@@ -1,15 +1,19 @@
 # synthetic-monitor
 
-A simple tool for synthetic monitoring using YAML files to orchestrate the tests. The main advantage of this approach is that you don't need to code custom scripts to run synthetic tests, instead you describe the tests declaratively using simple to understand YAML and let the synthetic-monitor engine do the heavy lifting. 
-
-The synthetic-monitor tests currently supports the following:
+A simple tool for executing synthetic monitoring on websites or webservices. 
+The main benefit of this tool is that api or simulated transactions can be declared 
+using simple YAML language rather than code. 
+     
+The synthetic-monitor tests currently supports the following functionalities:
 - Can be invoked via scheduler, directly via API or the web-based front end 
 - Tests can be loaded from files, and can be managed via API or the web-based frontend
 - Each synthetic-monitor test can have one or more synthentic test actions 
-- The following test actions are planned to be supported
-  - API action (GET, POST, PUSH, DELETE) 
-  - SQL action (SQL query on JDBC compliant databases)
-  - Puppeteer action
+- The following test action is supported: 
+  - API action 
+     - GET 
+     - POST 
+     - PUSH 
+     - DELETE      
 
 ![Overview screen](screenshot1.png)
 
@@ -21,57 +25,54 @@ These instructions will get you a copy of the project up and running on your loc
 
 What things you need to install the software and how to install them
 
-```
-Give examples
-```
+1. [Git commandline](https://git-scm.com/downloads)
+2. [OpenJDK11](https://openjdk.java.net/) 
+3. [ReactJS](http://reactjs.org/) 
+4. [NodeJS](https://nodejs.org/en/)
+3. Eclipse / IntelliJ / Any other Java IDE that supports maven build process
 
 ### Installing
 
 A step by step series of examples that tell you how to get a development env running
+ - Import the project into Eclipse/IntelliJ
+ - Add Maven pom.xml to your project
+ - Run SyntheticMonitorApplication.java 
 
-Say what the step will be
-
-```
-Give the example
-```
-
-And repeat
-
-```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo
-
-## Running the tests
-
-Explain how to run the automated tests for this system
-
-### Break down into end to end tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
+Please refer to the synthetic monitor test yaml files at ./api/data/demo-yaml and the tests under 
+./api/src/test/java/com/gkh/syntheticmonitor/model to get an understanding on how to write a YAML test.
 
 ## Deployment
-
-Add additional notes about how to deploy this on a live system
+ 
+ - To deploy the app as docker container:
+    - docker-compose -f /Users/gohk/IdeaProjects/synthetic-monitor/docker-compose.yml build
+    - docker-compose -f /Users/gohk/IdeaProjects/synthetic-monitor/docker-compose.yml up  
 
 ## Built With
 
 * [SprintBoot](http://spring.org/) - Spring Boot 2.2.4
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ReactJS](http://reactjs.org/) - Used to build the front-end
+* [OpenJDK11](https://openjdk.java.net/) - For building the backend
+* [Maven](https://maven.apache.org/) - Dependency Management for Java/Springboot
+* [ReactJS](http://reactjs.org/) - For the frontend
+
+## Roadmap
+
+* Frontend
+    - Search functionality in the overview monitoring page
+    - Proper KPI dashboard
+    - Test Editors
+    - Aggregated report (weekly, monthly)
+* Backend
+    - Assert actions via script (similar to Postman)
+    - Actions:
+      - Puppeteer action
+      - JDBC action
+      - ...
+    - Alarm
+      - Email
+      - Slack
+      - API hook
+      - ...
+     
 
 ## Contributing
 
@@ -90,8 +91,5 @@ See also the list of [contributors](https://github.com/your/project/contributors
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
 
-## Acknowledgments
-
-* Todo
 
 

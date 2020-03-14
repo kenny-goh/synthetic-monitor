@@ -39,8 +39,6 @@ public class ApplicationService {
 	@Transactional
 	@SneakyThrows
 	public void init() {
-
-
 		// Sync YAML and delete
 
 		List<File> filesInFolder = Files.walk(Paths.get(bootstrapYamlPath))

@@ -5,7 +5,7 @@ app:
     pauseTimeBetweenActionsInSeconds: 15
     optimalResponseThreshold: 500
     maximalResponseThreshold: 3000
-    tests_yaml_path: ./data/tests-yaml/
+    tests_yaml_path: ./data/demo-yaml/
     api:
       expectedStatus: 200
 
