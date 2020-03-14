@@ -43,7 +43,7 @@ Please refer to the synthetic monitor test yaml files at ./api/data/demo-yaml an
 
 ## Deployment
  
- - To deploy the app as docker container:
+ - To deploy the app as docker container for testing:
     - docker-compose -f /Users/gohk/IdeaProjects/synthetic-monitor/docker-compose.yml build
     - docker-compose -f /Users/gohk/IdeaProjects/synthetic-monitor/docker-compose.yml up  
 
@@ -92,4 +92,5 @@ See also the list of [contributors](https://github.com/your/project/contributors
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
 
 
+## Acknowledgements
 
