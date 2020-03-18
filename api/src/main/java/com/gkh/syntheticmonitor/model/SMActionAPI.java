@@ -46,6 +46,9 @@ public class SMActionAPI extends AbstractSMAction {
 	@JsonIgnore
 	private transient String expandedUrl;
 
+	@JsonIgnore
+	private transient Map<String,String> expandedRequestHeaders;
+
 	@Override
 	@SneakyThrows
 	public void resolveVariables(SMExecutionContext context) {
@@ -55,16 +58,33 @@ public class SMActionAPI extends AbstractSMAction {
 
 		log.info("Expanded URL {}", this.expandedUrl);
 
+		SimpleTemplateEngine engine = new groovy.text.SimpleTemplateEngine();
 		if (this.requestBody != null && this.requestBody.contains("$")) {
 			// Fixme: put this to abstract class
-			SimpleTemplateEngine engine = new groovy.text.SimpleTemplateEngine();
 			Template template = engine.createTemplate(this.requestBody);
 			Writable textTemplate = template.make(context.getVars());
 			this.requestBodyExpanded  = textTemplate.toString();
-		} else {
+		}
+		else {
 			this.requestBodyExpanded = this.requestBody;
 		}
+
+		this.expandedRequestHeaders = new HashMap<String,String>(this.requestHeaders);
+		this.expandedRequestHeaders.forEach((k, v)->{
+			try {
+				if (v.contains("$")) {
+					Template template = engine.createTemplate(v);
+					Writable textTemplate = template.make(context.getVars());
+					String expandedValue  = textTemplate.toString();
+					this.expandedRequestHeaders.put(k,expandedValue);
+				}
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+		});
+
 	}
+
 
 	@Override
 	public void execute(SMExecutionContext context) throws SyntheticTestException {
@@ -73,8 +93,9 @@ public class SMActionAPI extends AbstractSMAction {
 		RestTemplate restTemplate = new RestTemplate();
 		HttpHeaders httpHeaders = new HttpHeaders();
 
-		if (requestHeaders != null) {
-			requestHeaders.keySet().forEach(key -> httpHeaders.set(key, requestHeaders.get(key)));
+		// fixme
+		if (expandedRequestHeaders!= null) {
+			expandedRequestHeaders.keySet().forEach(key -> httpHeaders.set(key, expandedRequestHeaders.get(key)));
 		}
 
 		String status, content;

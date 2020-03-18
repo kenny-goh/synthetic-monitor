@@ -5,7 +5,7 @@ app:
     pauseTimeBetweenActionsInSeconds: 15
     optimalResponseThreshold: 500
     maximalResponseThreshold: 3000
-    tests_yaml_path: ./data/demo-yaml/
+    tests_yaml_path: ./data/tests-yaml/
     api:
       expectedStatus: 200
 
@@ -14,6 +14,7 @@ spring:
     scheduling:
       pool:
         size: 1
+
   datasource:
     url: jdbc:h2:file:./data/h2/h2db;AUTO_SERVER=TRUE  #jdbc:h2:mem:devDb
     driverClassName: org.h2.Driver

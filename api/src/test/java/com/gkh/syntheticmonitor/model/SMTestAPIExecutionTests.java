@@ -143,6 +143,40 @@ public class SMTestAPIExecutionTests extends BaseSyntheticTestSpringSupport {
 		Assertions.assertEquals(context.getStatus(), STATUS_200);
 	}
 
+	@Test
+	@SneakyThrows
+	public void synthetcTestCanResolveVariableInHeaders() {
+
+		stubFor(
+			get(urlPathEqualTo("/test123"))
+				.withHeader("test",equalTo("some values"))
+				.withHeader("test2",equalTo("testing"))
+				.willReturn(
+					aResponse()
+						.withStatus(HttpStatus.SC_OK)
+						.withBody("")));
+
+		SMTest test = SMTest.builder()
+				.name("Test")
+				.variable("test","some values")
+				.variable("test2","testing")
+				.action(SMActionAPI.builder()
+						.name("Simple test to execute GET api call with pre request script")
+						.requestMethod(SMActionAPI.METHOD_GET)
+						.requestHeader("test","${test}")
+						.requestHeader("test2","${test2}")
+						.requestUrl(TEST_URL + "/test123")
+						.expectedStatus(STATUS_200)
+						.build())
+				.build();
+
+		SMExecutionContext context = new SMExecutionContext();
+		test.execute(context);
+		Assertions.assertEquals(context.getStatus(), STATUS_200);
+	}
+
+
+
 	private void givenGetHelloRequestWillReturnOkay() {
 		stubFor(
 			get(urlPathEqualTo("/hello"))

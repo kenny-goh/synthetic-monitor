@@ -9,6 +9,7 @@ import com.gkh.syntheticmonitor.model.converter.ActionYamlConverter;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.annotations.*;
+import org.hibernate.annotations.Parameter;
 
 import javax.persistence.*;
 import javax.persistence.CascadeType;
@@ -18,10 +19,10 @@ import javax.persistence.OrderBy;
 import java.io.InputStream;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 @Data
@@ -42,8 +43,13 @@ public class SMTest {
 
 	private String tags;
 
-	@Lob
-	private HashMap<String,String> envVariables;
+
+	@org.hibernate.annotations.Type(
+			type = "org.hibernate.type.SerializableToBlobType",
+			parameters = { @Parameter( name = "classname", value = "java.util.HashMap" ) }
+	)
+	@Singular
+	private Map<String,String> variables = new HashMap<>();
 
 	private int scheduleTimeInSeconds = DEFAULT_SCHEDULE_TIME_IN_SECONDS ;
 	private int pauseTimeBetweenActionsMillis = PAUSE_TIME_BETWEEN_ACTIONS_MILLIS;
@@ -164,83 +170,14 @@ public class SMTest {
 	}
 
 
-	public static class SMTestBuilder {
-
-		private int scheduleTimeInSeconds = DEFAULT_SCHEDULE_TIME_IN_SECONDS;
-		private int pauseTimeBetweenActionsInSeconds= PAUSE_TIME_BETWEEN_ACTIONS_MILLIS;
-
-		public SMTestBuilder getApiAction(String name,
-		                                  String url,
-		                                  HashMap headers,
-		                                  String preRequestScript,
-		                                  String postRequestScript) {
-			this.initActionsIfApplicable();
-			this.actions.add(SMActionAPI.builder()
-					.name(name)
-					.requestMethod(SMActionAPI.METHOD_GET)
-					.requestUrl(url)
-					.requestHeaders(headers)
-					.preRequestScript(preRequestScript)
-					.postRequestScript(postRequestScript)
-					.build());
-			return this;
-		}
-
-		public SMTestBuilder getApiAction(String name,
-		                                  String url,
-		                                  String preRequestScript,
-		                                  String postRequestScript) {
-			this.getApiAction(name, url, new HashMap<>(), preRequestScript, postRequestScript);
-			return this;
-		}
-
-		public SMTestBuilder getApiAction(String name,
-		                                  String url) {
-			log.info("***{}", this.pauseTimeBetweenActionsInSeconds);
-			this.getApiAction(name, url, new HashMap<>(), "", "");
-			return this;
-		}
-
-
-		public SMTestBuilder postApiAction(String name,
-		                                   String url,
-		                                   HashMap headers,
-		                                   String body,
-		                                   String preRequestScript,
-		                                   String postRequestScript) {
-			this.initActionsIfApplicable();
-			this.actions.add(SMActionAPI.builder()
-					.name(name)
-					.requestMethod(SMActionAPI.METHOD_POST)
-					.requestUrl(url)
-					.requestHeaders(headers)
-					.requestBody(body)
-					.preRequestScript(preRequestScript)
-					.postRequestScript(postRequestScript)
-					.build());
-			return this;
-		}
-
-		public SMTestBuilder postApiAction(String name, String url, HashMap headers, String body) {
-			this.postApiAction(name, url, headers, body, "","");
-			return this;
-		}
-
-		private void initActionsIfApplicable() {
-			if (this.actions == null) {
-				this.actions = new ArrayList<>();
-			}
-		}
-	}
-
 	public void execute(SMExecutionContext context) throws SyntheticTestException {
 		log.info("Executing test: {}", this.getName());
 		context.getReport().setName(this.name);
 		var size = actions.size();
 
 		// Bind environment variables
-		if (this.envVariables != null) {
-			this.envVariables.forEach((key, value) -> {
+		if (this.variables != null) {
+			this.variables.forEach((key, value) -> {
 				context.getVars().put(key, value);
 			});
 		}
