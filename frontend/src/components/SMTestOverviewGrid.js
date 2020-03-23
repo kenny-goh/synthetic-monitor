@@ -387,11 +387,9 @@ class SMTestOverviewGrid extends Component {
                         </Col>
                         <Col><Label labelName={"Passed"} className={"passed-label"}
                                     value={this.state.totalTestsPassed}/></Col>
-                        <Col><Label labelName={"Status NOK"} className={"failed-label"}
+                        <Col><Label labelName={"Failed status"} className={"failed-label"}
                                     value={this.state.totalTestsNotMatchStatusCode}/></Col>
-                        <Col><Label labelName={"Accept time"} className={"warning-label"}
-                                    value={this.state.totalTestsUnderMaxResponseTime}/></Col>
-                        <Col><Label labelName={"Slow time"} className={"failed-label"}
+                        <Col><Label labelName={"Failed time"} className={"failed-label"}
                                     value={this.state.totalTestsOverMaxResponseTime}/></Col>
                         <Col md={{span: 1, offset: 0}}>
                             <div className="container">
