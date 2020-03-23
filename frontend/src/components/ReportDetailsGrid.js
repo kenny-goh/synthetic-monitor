@@ -72,22 +72,6 @@ const MaxResponseTimeColumn = ({ row }) => (
     </div>
 )
 
-const OptimalResponseTimeColumn = ({ row }) => (
-    <div>
-        {(() => {
-            if (row.responseTime <= row.optimalResponseThreshold) {
-                return (
-                    <div><i className="light-green">{row.responseTime} {'ms <'} {row.optimalResponseThreshold} ms<GoCheck/></i></div>
-                )
-            } else {
-                return (
-                    <div><i className="warning">{row.responseTime} {'ms >'} {row.optimalResponseThreshold} ms<GoX/></i></div>
-                )
-            }
-        })()}
-    </div>
-)
-
 class ReportDetailsGrid extends Component {
 
     constructor(props) {
@@ -123,10 +107,6 @@ class ReportDetailsGrid extends Component {
                 selector: 'statusCodeIsMatching',
                 sortable: true,
                 cell: row=><StatusCodeMatchingColumn row={row} />},
-            {   name: "Optimal Response",
-                width: "200px",
-                selector: 'response',
-                sortable: true, cell: row=><OptimalResponseTimeColumn row={row} />},
             {   name: "Max Response",
                 width: "200px",
                 selector: 'response',

@@ -28,10 +28,8 @@ public class ReportDetail {
 	private String status;
 
 	private long responseTime;
-	private long optimalResponseThreshold;
 	private long maximumResponseThreshold;
 
-	private transient boolean responseTimeOptimal;
 	private transient boolean responseTimeUnderMax;
 	private transient boolean statusSuccess;
 
@@ -49,11 +47,6 @@ public class ReportDetail {
 		return this.isStatusCodeMatching() & this.isResponseTimeUnderMax();
 	}
 
-	@Column
-	@Access(AccessType.PROPERTY)
-	public boolean isResponseTimeOptimal() {
-		return this.responseTime <= this.optimalResponseThreshold;
-	}
 
 	@Column
 	@Access(AccessType.PROPERTY)

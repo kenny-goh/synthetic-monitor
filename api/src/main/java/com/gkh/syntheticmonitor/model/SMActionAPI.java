@@ -126,7 +126,6 @@ public class SMActionAPI extends AbstractSMAction {
 		.type(this.getType())
 		.status(status)
 		.content(content)
-		.optimalResponseThreshold(this.getOptimalResponseThreshold())
 		.maximumResponseThreshold(this.getMaximalResponseThreshold())
 		.expectedStatus(this.getExpectedStatus())
 		.responseTime(responseTime)

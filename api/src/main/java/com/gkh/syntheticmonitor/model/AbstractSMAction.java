@@ -35,7 +35,6 @@ public abstract class AbstractSMAction implements SMActionInterface {
 	private String postRequestScript;
 	private String preRequestScript;
 
-	private long optimalResponseThreshold;
 	private long maximalResponseThreshold;
 	private transient long prePauseTimeMillis;
 	private transient long postPauseTimeMillis;

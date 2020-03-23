@@ -12,7 +12,6 @@ actions:
   excludeInTestReport: false
   postRequestScript: null
   preRequestScript: null
-  optimalResponseThreshold: 0
   maximalResponseThreshold: 0
   requestHeaders:
     Content-Type: "application/json"

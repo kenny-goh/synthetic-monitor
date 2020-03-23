@@ -13,7 +13,6 @@ actions:
     excludeInTestReport: false
     postRequestScript: null
     preRequestScript: null
-    optimalResponseThreshold: 500
     maximalResponseThreshold: 3000
     requestHeaders: null
     requestMethod: "GET"
@@ -27,7 +26,6 @@ actions:
     excludeInTestReport: false
     postRequestScript: null
     preRequestScript: null
-    optimalResponseThreshold: 500
     maximalResponseThreshold: 3000
     requestHeaders: null
     requestMethod: "GET"

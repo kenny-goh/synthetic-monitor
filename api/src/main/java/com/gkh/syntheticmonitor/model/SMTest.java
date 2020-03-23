@@ -93,14 +93,8 @@ public class SMTest {
 	}
 
 	@JsonGetter
-	public long getTotalTestsOptimalResponseTime() {
-		return this.reports.stream().filter(p->p.isAllResponseTimeOptimal()).count();
-	}
-
-	@JsonGetter
 	public long getTotalTestsUnderMaxResponseTime() {
-		return (this.reports.stream().filter(p->p.isAllResponseTimeUnderMax()).count()) -
-				this.getTotalTestsOptimalResponseTime();
+		return (this.reports.stream().filter(p->p.isAllResponseTimeUnderMax()).count());
 	}
 
 	@JsonGetter
@@ -133,14 +127,6 @@ public class SMTest {
 	public long getMaxTimeThreshold() {
 		if (this.reports.size() > 0) {
 			return this.reports.get(0).getSumMaxTimeThreshold();
-		}
-		return 0;
-	}
-
-	@JsonGetter
-	public long getOptimalTimeThreshold() {
-		if (this.reports.size() > 0) {
-			return this.reports.get(0).getSumOptimalTimeThreshold();
 		}
 		return 0;
 	}
