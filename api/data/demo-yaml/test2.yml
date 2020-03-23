@@ -11,7 +11,6 @@ actions:
     description: null
     type: "API"
     excludeInTestReport: false
-    optimalResponseThreshold: 500
     maximalResponseThreshold: 3000
     requestMethod: "GET"
     requestUrl: "https://api.coindesk.com/v1/bpi/currentprice.json"

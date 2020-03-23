@@ -155,7 +155,6 @@ class SMTestOverviewGrid extends Component {
             kpiAverage: 0.0,
             totalTestsPassed: 0,
             totalTestsFailed: 0,
-            totalTestsOptimalResponseTime: 0,
             totalTestsUnderMaxResponseTime: 0,
             totalTestsOverMaxResponseTime: 0,
             totalTestsNotMatchStatusCode: 0
@@ -230,11 +229,8 @@ class SMTestOverviewGrid extends Component {
             report.x = report.timestamp
             report.y = report.sumResponseTime
 
-            if (report.allResponseTimeOptimal)  {
+            if (report.allResponseTimeUnderMax) {
                 report.color  = "#64E424";
-            }
-            else if (report.allResponseTimeUnderMax) {
-                report.color = "#BEE424";
             }
             else {
                 report.color = "red"
@@ -268,14 +264,12 @@ class SMTestOverviewGrid extends Component {
         let objects = this.state.data
         let totalPassed = 0
         let totalFailed = 0
-        let totalTestsOptimalResponseTime = 0
         let totalTestsUnderMaxResponseTime = 0
         let totalTestsOverMaxResponseTime = 0
         let totalTestsNotMatchStatusCode = 0
         for (let i = 0; i < objects.length; i += 1) {
             totalPassed = totalPassed + objects[i].totalTestsPassed
             totalFailed = totalFailed + objects[i].totalTestsFailed
-            totalTestsOptimalResponseTime = totalTestsOptimalResponseTime + objects[i].totalTestsOptimalResponseTime
             totalTestsUnderMaxResponseTime = totalTestsUnderMaxResponseTime + objects[i].totalTestsUnderMaxResponseTime
             totalTestsOverMaxResponseTime = totalTestsOverMaxResponseTime + objects[i].totalTestsOverMaxResponseTime
             totalTestsNotMatchStatusCode = totalTestsNotMatchStatusCode + objects[i].totalTestsNotMatchStatusCode
@@ -283,7 +277,6 @@ class SMTestOverviewGrid extends Component {
         this.setState({
             totalTestsPassed: totalPassed,
             totalTestsFailed: totalFailed,
-            totalTestsOptimalResponseTime: totalTestsOptimalResponseTime,
             totalTestsUnderMaxResponseTime: totalTestsUnderMaxResponseTime,
             totalTestsOverMaxResponseTime: totalTestsOverMaxResponseTime,
             totalTestsNotMatchStatusCode: totalTestsNotMatchStatusCode
@@ -396,9 +389,7 @@ class SMTestOverviewGrid extends Component {
                                     value={this.state.totalTestsPassed}/></Col>
                         <Col><Label labelName={"Status NOK"} className={"failed-label"}
                                     value={this.state.totalTestsNotMatchStatusCode}/></Col>
-                        <Col><Label labelName={"Fast time"} className={"passed-label"}
-                                    value={this.state.totalTestsOptimalResponseTime}/></Col>
-                        <Col><Label labelName={"OK time"} className={"warning-label"}
+                        <Col><Label labelName={"Accept time"} className={"warning-label"}
                                     value={this.state.totalTestsUnderMaxResponseTime}/></Col>
                         <Col><Label labelName={"Slow time"} className={"failed-label"}
                                     value={this.state.totalTestsOverMaxResponseTime}/></Col>

@@ -34,9 +34,7 @@ public class Report {
 	private transient long maxResponseTime;
 	private transient long averageResponseTime;
 	private transient int numberOfActions;
-	private transient long sumOptimalTimeThreshold;
 	private transient long sumMaxTimeThreshold;
-	private transient boolean allResponseTimeOptimal;
 	private transient boolean allResponseTimeUnderMax;
 	private transient boolean allStatusCodeMatching;
 
@@ -115,24 +113,11 @@ public class Report {
 	}
 
 
-	@Column
-	@Access(AccessType.PROPERTY)
-	public long getSumOptimalTimeThreshold() {
-		return this.reportDetails.stream().mapToLong(o->o.getOptimalResponseThreshold()).summaryStatistics().getSum();
-	}
-
 
 	@Column
 	@Access(AccessType.PROPERTY)
 	public long getSumMaxTimeThreshold() {
 		return this.reportDetails.stream().mapToLong(o->o.getMaximumResponseThreshold()).summaryStatistics().getSum();
-	}
-
-
-	@Column
-	@Access(AccessType.PROPERTY)
-	public boolean isAllResponseTimeOptimal() {
-		return this.reportDetails.stream().allMatch(p->p.isResponseTimeOptimal());
 	}
 
 
