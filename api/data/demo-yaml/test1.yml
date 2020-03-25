@@ -2,7 +2,6 @@
 name: "Test1"
 description: null
 scheduleTimeInSeconds: 60
-pauseTimeBetweenActionsMillis: 0
 type: "API"
 active: true
 actions:

@@ -21,13 +21,13 @@ public interface SMActionInterface {
 	 * @param context
 	 * @throws SyntheticTestException
 	 */
-	void  execute(SMExecutionContext context) throws SyntheticTestException;
+	void  execute(SMExecutionContext context) throws Exception;
 
 	/**
 	 *
 	 * @param context
 	 */
-	void postExecuteScript(SMExecutionContext context);
+	void postExecuteScript(SMExecutionContext context) throws Exception;
 
 	/**
 	 *

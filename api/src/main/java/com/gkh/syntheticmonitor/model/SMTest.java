@@ -19,6 +19,8 @@ import javax.persistence.OrderBy;
 import java.io.InputStream;
 
 import java.sql.Timestamp;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.HashMap;
 import java.util.List;
 
@@ -34,15 +36,11 @@ import java.util.concurrent.TimeUnit;
 public class SMTest {
 
 	public static final int DEFAULT_SCHEDULE_TIME_IN_SECONDS = 15;
-	public static final int PAUSE_TIME_BETWEEN_ACTIONS_MILLIS = 100;
 
 	@Id
 	private String name;
-
 	private String description;
-
 	private String tags;
-
 
 	@org.hibernate.annotations.Type(
 			type = "org.hibernate.type.SerializableToBlobType",
@@ -52,9 +50,9 @@ public class SMTest {
 	private Map<String,String> variables = new HashMap<>();
 
 	private int scheduleTimeInSeconds = DEFAULT_SCHEDULE_TIME_IN_SECONDS ;
-	private int pauseTimeBetweenActionsMillis = PAUSE_TIME_BETWEEN_ACTIONS_MILLIS;
 	private boolean active;
 	private String type;
+	private boolean continueActionOnFail;
 
 	@JsonIgnore
 	private boolean readyToExecute;
@@ -156,7 +154,7 @@ public class SMTest {
 	}
 
 
-	public void execute(SMExecutionContext context) throws SyntheticTestException {
+	public void execute(SMExecutionContext context) {
 		log.info("Executing test: {}", this.getName());
 		context.getReport().setName(this.name);
 		var size = actions.size();
@@ -168,24 +166,63 @@ public class SMTest {
 			});
 		}
 
+		boolean previousStepFailed = false;
 		for (var each : actions) {
-				log.info("Firing action {}", each.getName());
-				if (each.getPrePauseTimeMillis() > 0) {
-					sleep(each.getPrePauseTimeMillis());
+				Instant start = Instant.now();
+				long responseTime = 0;
+				try {
+					if (!previousStepFailed || this.continueActionOnFail) {
+
+						log.info("Firing action {}", each.getName());
+						if (each.getPrePauseTimeMillis() > 0) {
+							sleep(each.getPrePauseTimeMillis());
+						}
+						each.preExecuteScript(context);
+						each.resolveVariables(context);
+						each.execute(context);
+						each.postExecuteScript(context);
+
+						if (each.getPostPauseTimeMillis() > 0) {
+							sleep(each.getPostPauseTimeMillis());
+						}
+
+						Instant finish = Instant.now();
+						responseTime = Duration.between(start, finish).toMillis();
+
+						createReport(context, each, responseTime, context.getContent(), context.getStatus());
+					}
 				}
-				each.preExecuteScript(context);
-				each.resolveVariables(context);
-				each.execute(context);
-				each.postExecuteScript(context);
-				if (each.getPostPauseTimeMillis() > 0) {
-					sleep(each.getPostPauseTimeMillis());
+				catch(Exception e) {
+					previousStepFailed = true;
+
+					Instant finish = Instant.now();
+					responseTime = Duration.between(start, finish).toMillis();
+
+					String content = e.getMessage();
+					String status = "ERROR";
+
+					createReport(context, each, responseTime, content, status);
+
+					context.setContent(content);
+					context.setStatus(status);
 				}
-				var index = actions.indexOf(each);
-				if (index < size - 1) {
-					sleep(this.pauseTimeBetweenActionsMillis);
-				}
-		}
+			}
+
 		this.timeLastExecuted = new Timestamp(System.currentTimeMillis());
+	}
+
+	private void createReport(SMExecutionContext context, AbstractSMAction each, long responseTime, String content, String status) {
+		ReportDetail actionReport = ReportDetail.builder()
+				.name(each.getName())
+				.details(each.getDetails())
+				.type(each.getType())
+				.status(status)
+				.content(content)
+				.maximumResponseThreshold(each.getMaximalResponseThreshold())
+				.expectedStatus(each.getExpectedStatus())
+				.responseTime(responseTime)
+				.build();
+		context.getReport().getReportDetails().add(actionReport);
 	}
 
 	private void sleep(long prePauseTimeMillis) {

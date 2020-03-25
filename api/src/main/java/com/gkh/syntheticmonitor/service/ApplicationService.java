@@ -1,5 +1,6 @@
 package com.gkh.syntheticmonitor.service;
 
+import com.gkh.syntheticmonitor.exception.SyntheticTestException;
 import com.gkh.syntheticmonitor.model.Report;
 import com.gkh.syntheticmonitor.model.SMTest;
 import com.gkh.syntheticmonitor.model.SMExecutionContext;
@@ -81,18 +82,17 @@ public class ApplicationService {
 	}
 
 	@Transactional
-	public SMTest executeSyntheticTest(String testName) throws Exception {
+	public SMTest executeSyntheticTest(String testName) throws SyntheticTestException {
 		Optional<SMTest> optional = repository.findById(testName);
 		if (optional.isPresent()) {
 			SMTest test = optional.get();
 			SMExecutionContext context = new SMExecutionContext();
 			test.execute(context);
 			Report report = context.getReport();
-			repository.save(test);
 			reportRepository.save(report);
 			return test;
 		} else {
-			throw new Exception("Test not found:" + testName);
+			throw new SyntheticTestException("Test not found:" + testName);
 		}
 	}
 
@@ -104,10 +104,7 @@ public class ApplicationService {
 	@Transactional
 	public void executeNextTests() {
 		List<SMTest> tests = repository.selectReadyToExecuteTests();
-		int maxSize = tests.size();
-		if (maxSize > 0) {
-			// Pick a random test
-			SMTest test = tests.get(new Random().nextInt(maxSize));
+		tests.forEach(test-> {
 			try {
 				log.info("Firing test: {}", test.getName());
 				SMExecutionContext context = new SMExecutionContext();
@@ -117,12 +114,11 @@ public class ApplicationService {
 				reportRepository.save(report);
 			} catch (Exception e) {
 				log.error(e.getMessage());
-				e.printStackTrace();
 			} finally {
 				test.setReadyToExecute(false);
 			}
-			//repository.save(test);
-		}
+		});
+
 
 	}
 }

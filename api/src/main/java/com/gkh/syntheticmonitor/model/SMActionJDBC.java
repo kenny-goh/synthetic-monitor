@@ -24,4 +24,14 @@ public class SMActionJDBC extends AbstractSMAction {
 	public String getType() {
 		return JDBC;
 	}
+
+	@Override
+	public String getDetails() {
+		return null;
+	}
+
+	@Override
+	public String getExpectedStatus() {
+		return null;
+	}
 }

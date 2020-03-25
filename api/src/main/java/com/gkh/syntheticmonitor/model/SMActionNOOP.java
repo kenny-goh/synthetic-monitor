@@ -34,4 +34,14 @@ public class SMActionNOOP extends AbstractSMAction {
 	public String getType() {
 		return NOOP;
 	}
+
+	@Override
+	public String getDetails() {
+		return null;
+	}
+
+	@Override
+	public String getExpectedStatus() {
+		return null;
+	}
 }

@@ -1,5 +1,7 @@
 package com.gkh.syntheticmonitor.model;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import groovy.lang.Binding;
@@ -9,6 +11,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.Ignore;
 import org.springframework.util.StringUtils;
 
 import javax.persistence.*;
@@ -62,5 +65,7 @@ public abstract class AbstractSMAction implements SMActionInterface {
 	@Override
 	public void resolveVariables(SMExecutionContext context) { }
 
-
+	@JsonIgnore
+	public abstract String getDetails();
+	public abstract String getExpectedStatus();
 }

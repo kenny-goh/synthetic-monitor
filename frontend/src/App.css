@@ -4,13 +4,12 @@
     color:green
 }
 
-.warning-label {
+.failed-time-label {
     font-weight:bold;
-    color: #64E424
+    color: darkorange;
 }
 
-
-.failed-label {
+.failed-status-label {
     font-weight:bold;
     color: red
 }

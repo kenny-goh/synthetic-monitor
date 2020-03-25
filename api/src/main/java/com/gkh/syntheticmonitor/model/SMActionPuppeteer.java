@@ -21,4 +21,14 @@ public class SMActionPuppeteer extends AbstractSMAction {
 	public String getType() {
 		return PUPPETEER;
 	}
+
+	@Override
+	public String getDetails() {
+		return null;
+	}
+
+	@Override
+	public String getExpectedStatus() {
+		return null;
+	}
 }

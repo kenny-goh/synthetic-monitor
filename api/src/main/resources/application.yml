@@ -2,7 +2,6 @@
 app:
   settings:
     scheduleTimeInMinutes: 1
-    pauseTimeBetweenActionsInSeconds: 15
     maximalResponseThreshold: 3000
     tests_yaml_path: ./data/tests-yaml/
     api:

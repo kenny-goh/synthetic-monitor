@@ -2,6 +2,8 @@ import './../App.css'
 import React, {Component} from 'react';
 import DataTable from 'react-data-table-component';
 import {GoCheck} from "react-icons/go";
+import Button from './Button';
+import styled from 'styled-components';
 import {
     IoIosCheckmarkCircle,
     IoIosCloseCircle,
@@ -139,6 +141,42 @@ const AverageResponseTimeColumn = ({row}) => (
 const Label = ({labelName, className, value}) =>
     <div className="container"><span className={className}>{labelName}:</span> {value}</div>
 
+const TextField = styled.input`
+  height: 32px;
+  width: 200px;
+  border-radius: 3px;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border: 1px solid #e5e5e5;
+  padding: 0 32px 0 16px;
+
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+const ClearButton = styled(Button)`
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  height: 34px;
+  width: 32px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+
+const FilterComponent = ({ filterText, onFilter, onClear }) => (
+    <>
+        <TextField id="search" type="text" placeholder="Filter By Name" value={filterText} onChange={onFilter} />
+        <ClearButton onClick={onClear}>X</ClearButton>
+    </>
+);
 
 /**
  *
@@ -157,7 +195,9 @@ class SMTestOverviewGrid extends Component {
             totalTestsFailed: 0,
             totalTestsUnderMaxResponseTime: 0,
             totalTestsOverMaxResponseTime: 0,
-            totalTestsNotMatchStatusCode: 0
+            totalTestsNotMatchStatusCode: 0,
+            filteredItems: [],
+            filterText: ''
         }
     }
 
@@ -225,15 +265,17 @@ class SMTestOverviewGrid extends Component {
 
     updateReportColorForRow= (row) => {
         row.reports.forEach(function(report) {
-
             report.x = report.timestamp
             report.y = report.sumResponseTime
 
-            if (report.allResponseTimeUnderMax) {
+            if (!report.allStatusCodeMatching) {
+                report.color  = "red";
+            }
+            else if (report.allResponseTimeUnderMax) {
                 report.color  = "#64E424";
             }
             else {
-                report.color = "red"
+                report.color = "darkOrange"
             }
         })
     }
@@ -372,10 +414,20 @@ class SMTestOverviewGrid extends Component {
                 sortable: true,
                 cell: row => <LastExecutedTimeColumn row={row}/>
             },
-            {name: 'Enable', button: true, cell: row => <ToggleEnableButton row={row} smTestOverviewGrid={this}/>},
+            {name: 'Enable schedule', button: true, cell: row => <ToggleEnableButton row={row} smTestOverviewGrid={this}/>},
             {name: '', button: true, cell: (row) => <RunButton row={row} smTestOverviewGrid={this}/>},
         ]
 
+        const filteredItems = this.state.data.filter(item => item.name.toLowerCase().includes(this.state.filterText.toLowerCase())
+            || item.tags.toLowerCase().includes(this.state.filterText.toLowerCase())
+            || item.type.toLowerCase().includes(this.state.filterText.toLowerCase())
+        );
+
+        const handleClear = () => {
+            if (this.state.filterText) {
+                this.setState({filterText:""})
+            }
+        };
 
         return (
             <div>
@@ -387,9 +439,9 @@ class SMTestOverviewGrid extends Component {
                         </Col>
                         <Col><Label labelName={"Passed"} className={"passed-label"}
                                     value={this.state.totalTestsPassed}/></Col>
-                        <Col><Label labelName={"Failed status"} className={"failed-label"}
+                        <Col><Label labelName={"Failed status"} className={"failed-status-label"}
                                     value={this.state.totalTestsNotMatchStatusCode}/></Col>
-                        <Col><Label labelName={"Failed time"} className={"failed-label"}
+                        <Col><Label labelName={"Failed time"} className={"failed-time-label"}
                                     value={this.state.totalTestsOverMaxResponseTime}/></Col>
                         <Col md={{span: 1, offset: 0}}>
                             <div className="container">
@@ -415,13 +467,18 @@ class SMTestOverviewGrid extends Component {
                 <DataTable title={"Test monitoring over 24 hours"}
                            stroke={"black"}
                            columns={columns}
-                           data={this.state.data}
+                           //data={this.state.data}
+                           data = {filteredItems}
                            progressPending={this.state.fetchPending}
                            progressComponent={<LinearIndeterminate/>}
                            highlightOnHover={true}
                            expandableRows
                            expandableRowsComponent={<ReportsGrid/>}
-                           expandOnRowClicked/>
+                           expandOnRowClicked
+                           subHeader
+                           subHeaderComponent={<FilterComponent onFilter={e => this.setState({filterText: e.target.value})}
+                                                                onClear={handleClear}
+                                                                filterText={this.state.filterText} />} />
             </div>
         );
     }

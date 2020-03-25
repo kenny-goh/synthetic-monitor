@@ -1,5 +1,6 @@
 package com.gkh.syntheticmonitor.model;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.gkh.syntheticmonitor.exception.SyntheticTestException;
 import groovy.lang.Writable;
@@ -16,8 +17,7 @@ import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.time.Duration;
-import java.time.Instant;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -85,10 +85,14 @@ public class SMActionAPI extends AbstractSMAction {
 
 	}
 
+	@Override
+	public String getDetails() {
+		return this.getRequestMethod() + " " + this.requestUrl;
+	}
+
 
 	@Override
-	public void execute(SMExecutionContext context) throws SyntheticTestException {
-
+	public void execute(SMExecutionContext context) throws Exception  {
 
 		RestTemplate restTemplate = new RestTemplate();
 		HttpHeaders httpHeaders = new HttpHeaders();
@@ -99,8 +103,7 @@ public class SMActionAPI extends AbstractSMAction {
 		}
 
 		String status, content;
-		long responseTime = 0;
-		Instant start = Instant.now();
+
 		try {
 			HttpEntity entity = new HttpEntity(this.requestBodyExpanded, httpHeaders);
 			HttpMethod httpMethod = getHttpMethod(requestMethod);
@@ -115,37 +118,20 @@ public class SMActionAPI extends AbstractSMAction {
 		} catch (ResourceAccessException e ) {
 			status = "TIMEOUT";
 			content = e.getMessage();
-		} finally {
-			Instant finish = Instant.now();
-			responseTime = Duration.between(start, finish).toMillis();
 		}
-
-		ReportDetail actionReport = ReportDetail.builder()
-		.name(this.getName())
-		.details(this.getRequestMethod() + " " + this.requestUrl)
-		.type(this.getType())
-		.status(status)
-		.content(content)
-		.maximumResponseThreshold(this.getMaximalResponseThreshold())
-		.expectedStatus(this.getExpectedStatus())
-		.responseTime(responseTime)
-		.build();
-
-		context.getReport().getReportDetails().add(actionReport);
 		context.setContent(content);
 		context.setStatus(status);
 
 		log.info("Status: {} Content: {}", status, content);
 
-
 	}
 
-	private static HttpMethod getHttpMethod(String method) throws SyntheticTestException {
+	private static HttpMethod getHttpMethod(String method) throws Exception {
 		if (method.equals(METHOD_GET)) return HttpMethod.GET;
 		if (method.equals(METHOD_POST)) return HttpMethod.POST;
 		if (method.equals(METHOD_PUT)) return HttpMethod.PUT;
 		if (method.equals(METHOD_DELETE)) return HttpMethod.DELETE;
-		throw new SyntheticTestException("API Method not supported:" + method);
+		throw new Exception("API Method not supported:" + method);
 	}
 
 	@Override
