@@ -7,9 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface SyntheticTestRepository extends JpaRepository<SMTest, String> {
-
-	// FIXME: There is a bug somewhere with this code or the hibernate library that causes this piece of code not to work properly
+public interface SMTestRepository extends JpaRepository<SMTest, String> {
 
 	@Modifying
 	@Query("update SMTest test set test.readyToExecute = true where test.active=true and " +
@@ -20,7 +18,7 @@ public interface SyntheticTestRepository extends JpaRepository<SMTest, String> {
 	List<SMTest> selectReadyToExecuteTests();
 
 	@Query("select test from SMTest test")
-	List<SMTest> selectSyntheticTests();
+	List<SMTest> selectTests();
 
 }
 

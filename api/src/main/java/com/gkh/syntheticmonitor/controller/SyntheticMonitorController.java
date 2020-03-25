@@ -1,6 +1,5 @@
 package com.gkh.syntheticmonitor.controller;
 
-
 import com.gkh.syntheticmonitor.model.SMTest;
 import com.gkh.syntheticmonitor.service.ApplicationService;
 import lombok.SneakyThrows;
@@ -24,28 +23,28 @@ public class SyntheticMonitorController {
 	private ApplicationService appService;
 
 	@GetMapping(
-			value = "/get_synthetic_tests",
+			value = "/find_all_tests",
 			produces = {APPLICATION_JSON_VALUE})
-	public ResponseEntity<List<SMTest>> getSyntheticTests() {
-		List<SMTest> results = appService.findAllSyntheticTests();
+	public ResponseEntity<List<SMTest>> getTests() {
+		List<SMTest> results = appService.findAllTests();
 		HttpHeaders httpHeaders = new HttpHeaders();
 		httpHeaders.set("Access-Control-Allow-Origin", "*");
 		return new ResponseEntity<>(results, httpHeaders, HttpStatus.OK);
 	}
 
-	@PostMapping(value = "toggle_synthetic_test")
+	@PostMapping(value = "toggle_test")
 	@SneakyThrows
-	public ResponseEntity<String> toggleSyntheticTest(@RequestParam  String testName)  {
-		Boolean result = appService.toggleSyntheticTests(testName);
+	public ResponseEntity<String> toggleTest(@RequestParam  String testName)  {
+		Boolean result = appService.toggleTests(testName);
 		HttpHeaders httpHeaders = new HttpHeaders();
 		httpHeaders.set("Access-Control-Allow-Origin", "*");
 		return new ResponseEntity<String>(result.toString(), httpHeaders, HttpStatus.OK);
 	}
 
-	@PostMapping(value = "execute_synthetic_test")
+	@PostMapping(value = "execute_test")
 	@SneakyThrows
-	public ResponseEntity<SMTest> executeSyntheticTests(@RequestParam  String testName)  {
-		SMTest test = appService.executeSyntheticTest(testName);
+	public ResponseEntity<SMTest> executeTests(@RequestParam  String testName)  {
+		SMTest test = appService.executeTest(testName);
 		HttpHeaders httpHeaders = new HttpHeaders();
 		httpHeaders.set("Access-Control-Allow-Origin", "*");
 		return new ResponseEntity<SMTest>(test, httpHeaders, HttpStatus.OK);

@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
-import com.gkh.syntheticmonitor.exception.SyntheticTestException;
 import com.gkh.syntheticmonitor.model.converter.ActionYamlConverter;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
@@ -121,13 +120,13 @@ public class SMTest {
 		return this.reports.stream().mapToDouble(r->r.getSumResponseTime()).summaryStatistics().getAverage();
 	}
 
-	@JsonGetter
-	public long getMaxTimeThreshold() {
-		if (this.reports.size() > 0) {
-			return this.reports.get(0).getSumMaxTimeThreshold();
-		}
-		return 0;
-	}
+//	@JsonGetter
+//	public long getMaxTimeThreshold() {
+//		if (this.reports.size() > 0) {
+//			return this.reports.get(0).getSumMaxTimeThreshold();
+//		}
+//		return 0;
+//	}
 
 	@JsonGetter
 	public double getTotalRuns() {
@@ -141,6 +140,7 @@ public class SMTest {
 
 	@JsonGetter
 	public String status() {
+		// Fixme: "Stable", "Unstable", "Bad", "Critical", "Healthy"
 		if (this.reports.size() > 0) {
 			boolean passed = this.reports.get(this.reports.size() - 1).isPassed();
 			if (passed) {
@@ -157,7 +157,6 @@ public class SMTest {
 	public void execute(SMExecutionContext context) {
 		log.info("Executing test: {}", this.getName());
 		context.getReport().setName(this.name);
-		var size = actions.size();
 
 		// Bind environment variables
 		if (this.variables != null) {
@@ -190,6 +189,7 @@ public class SMTest {
 						responseTime = Duration.between(start, finish).toMillis();
 
 						createReport(context, each, responseTime, context.getContent(), context.getStatus());
+
 					}
 				}
 				catch(Exception e) {
@@ -207,6 +207,9 @@ public class SMTest {
 					context.setStatus(status);
 				}
 			}
+
+
+		log.info("Status: {} Content: {}", context.getStatus(), context.getContent());
 
 		this.timeLastExecuted = new Timestamp(System.currentTimeMillis());
 	}

@@ -56,7 +56,7 @@ const LinearIndeterminate = () => {
 };
 
 const enableDisableSMTest = (row, smTestOverviewGrid) => {
-    axios.post('http://localhost:8080/toggle_synthetic_test',
+    axios.post('http://localhost:8080/toggle_test',
         null,
         {params: {testName: row.name}})
         .then(function (success) {
@@ -80,7 +80,7 @@ const ToggleEnableButton = ({row, smTestOverviewGrid}) => (
 );
 
 const runNow = (row, smTestOverviewGrid) => {
-        axios.post('http://localhost:8080/execute_synthetic_test',
+        axios.post('http://localhost:8080/execute_test',
             null,
             {params: {testName: row.name}})
             .then(function (success) {
@@ -241,7 +241,7 @@ class SMTestOverviewGrid extends Component {
 
     fetchData = () => {
         this.state.fetchPending = true;
-        axios.get(`http://localhost:8080/get_synthetic_tests`)
+        axios.get(`http://localhost:8080/find_all_tests`)
             .then(this.onFetchDataSuccess)
             .catch(function (error) {
                 console.log("Ooops:" + error)

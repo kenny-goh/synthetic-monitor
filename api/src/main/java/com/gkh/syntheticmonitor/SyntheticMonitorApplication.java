@@ -8,6 +8,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import javax.annotation.PostConstruct;
 
+// Todo: Agent to execute action remotely?
+// Todo: Plugin architecture
+
 @SpringBootApplication
 @Slf4j
 public class SyntheticMonitorApplication {

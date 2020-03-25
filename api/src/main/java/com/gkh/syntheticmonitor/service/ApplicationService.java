@@ -5,7 +5,7 @@ import com.gkh.syntheticmonitor.model.Report;
 import com.gkh.syntheticmonitor.model.SMTest;
 import com.gkh.syntheticmonitor.model.SMExecutionContext;
 import com.gkh.syntheticmonitor.repository.ReportRepository;
-import com.gkh.syntheticmonitor.repository.SyntheticTestRepository;
+import com.gkh.syntheticmonitor.repository.SMTestRepository;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
@@ -21,7 +21,6 @@ import java.nio.file.Paths;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
-import java.util.Random;
 import java.util.stream.Collectors;
 
 @Service
@@ -29,7 +28,7 @@ import java.util.stream.Collectors;
 public class ApplicationService {
 
 	@Autowired
-	private SyntheticTestRepository repository;
+	private SMTestRepository repository;
 
 	@Autowired
 	private ReportRepository reportRepository;
@@ -64,12 +63,12 @@ public class ApplicationService {
 
 	}
 
-	public List<SMTest> findAllSyntheticTests() {
-		return repository.selectSyntheticTests();
+	public List<SMTest> findAllTests() {
+		return repository.selectTests();
 	}
 
 	@Transactional
-	public boolean toggleSyntheticTests(String testName) throws Exception {
+	public boolean toggleTests(String testName) throws Exception {
 		Optional<SMTest> optional = repository.findById(testName);
 		if (optional.isPresent()) {
 			SMTest test = optional.get();
@@ -82,7 +81,7 @@ public class ApplicationService {
 	}
 
 	@Transactional
-	public SMTest executeSyntheticTest(String testName) throws SyntheticTestException {
+	public SMTest executeTest(String testName) throws SyntheticTestException {
 		Optional<SMTest> optional = repository.findById(testName);
 		if (optional.isPresent()) {
 			SMTest test = optional.get();

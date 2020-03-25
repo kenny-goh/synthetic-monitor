@@ -1,8 +1,6 @@
 package com.gkh.syntheticmonitor.model;
 
-import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.gkh.syntheticmonitor.exception.SyntheticTestException;
 import groovy.lang.Writable;
 import groovy.text.SimpleTemplateEngine;
 import groovy.text.Template;
@@ -17,10 +15,8 @@ import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-
 import java.util.HashMap;
 import java.util.Map;
-
 
 @Data
 @AllArgsConstructor
@@ -28,6 +24,8 @@ import java.util.Map;
 @SuperBuilder
 @Slf4j
 public class SMActionAPI extends AbstractSMAction {
+
+	// Todo: SSL certificate support?
 
 	public final static String API = "API";
 	public final static String METHOD_GET = "GET";
@@ -94,6 +92,8 @@ public class SMActionAPI extends AbstractSMAction {
 	@Override
 	public void execute(SMExecutionContext context) throws Exception  {
 
+		log.info("API Test Execute");
+
 		RestTemplate restTemplate = new RestTemplate();
 		HttpHeaders httpHeaders = new HttpHeaders();
 
@@ -121,9 +121,6 @@ public class SMActionAPI extends AbstractSMAction {
 		}
 		context.setContent(content);
 		context.setStatus(status);
-
-		log.info("Status: {} Content: {}", status, content);
-
 	}
 
 	private static HttpMethod getHttpMethod(String method) throws Exception {

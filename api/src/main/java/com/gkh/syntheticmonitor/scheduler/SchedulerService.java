@@ -1,7 +1,7 @@
 package com.gkh.syntheticmonitor.scheduler;
 
 import com.gkh.syntheticmonitor.repository.ReportRepository;
-import com.gkh.syntheticmonitor.repository.SyntheticTestRepository;
+import com.gkh.syntheticmonitor.repository.SMTestRepository;
 import com.gkh.syntheticmonitor.service.ApplicationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,7 @@ import java.time.format.DateTimeFormatter;
 public class SchedulerService {
 
 	@Autowired
-	private SyntheticTestRepository syntheticTestRepository;
+	private SMTestRepository testRepository;
 
 	@Autowired
 	private ReportRepository reportRepository;
