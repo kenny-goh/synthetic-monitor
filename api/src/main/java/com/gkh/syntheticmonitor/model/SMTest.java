@@ -90,28 +90,28 @@ public class SMTest {
 	}
 
 	@JsonGetter
-	public long getTotalTestsUnderMaxResponseTime() {
+	public long getStatisticsTestsUnderMaxResponseTime() {
 		return (this.reports.stream().filter(p->p.isAllResponseTimeUnderMax()).count());
 	}
 
 	@JsonGetter
-	public long getTotalTestsOverMaxResponseTime() {
+	public long getStatisticsTestsOverMaxResponseTime() {
 		return this.reports.stream().filter(p->!p.isAllResponseTimeUnderMax()).count();
 	}
 
 	@JsonGetter
-	public long getTotalTestsPassed() {
+	public long getStatisticsTestsPassed() {
 		return this.reports.stream().filter(p->p.isPassed()).count();
 	}
 
 
 	@JsonGetter
-	public long getTotalTestsNotMatchStatusCode() {
+	public long getStatisticsTestsNotMatchStatusCode() {
 		return this.reports.stream().filter(p->!p.isAllStatusCodeMatching()).count();
 	}
 
 	@JsonGetter
-	public long getTotalTestsFailed() {
+	public long getStatisticsTestsFailed() {
 		return this.reports.stream().filter(p->!p.isPassed()).count();
 	}
 
