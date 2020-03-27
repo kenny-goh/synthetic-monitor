@@ -86,6 +86,18 @@ class SMTestOverviewGrid extends Component {
         }, []));
     }
 
+    updateMonitoredFlag(id, value) {
+        this.setState(this.state.data.reduce((current, item) => {
+            if (item.name === id) {
+                item.monitored = value
+            }
+            current.push(item);
+            return current;
+        }, []));
+
+        this.updateStatistics();
+    }
+
     updateSMTest(id, value) {
         this.setState(this.state.data.reduce((current, item) => {
             if (item.name === id) {
@@ -153,7 +165,11 @@ class SMTestOverviewGrid extends Component {
         let tests = this.state.data
         let total = 0.0;
         for (let i = 0; i < tests.length; i += 1) {
-            total += tests[i].ratio24Hour
+            if (tests[i].monitored) {
+                total += tests[i].ratio24Hour
+            } else {
+                total += 100.0;
+            }
         }
         let result = (total / tests.length).toFixed(2)
         this.setState({
@@ -163,6 +179,8 @@ class SMTestOverviewGrid extends Component {
 
     updateAggregatedStatistics = () => {
 
+        //fixme: Use reducer to simplify code here
+
         let tests = this.state.data
         let passed = 0
         let failed = 0
@@ -171,11 +189,13 @@ class SMTestOverviewGrid extends Component {
         let notMatchStatusCode = 0
 
         for (let i = 0; i < tests.length; i += 1) {
-            passed = passed + tests[i].statisticsTestsPassed
-            failed = failed + tests[i].statisticsTestsFailed
-            underMaxResponseTime = underMaxResponseTime + tests[i].statisticsTestsUnderMaxResponseTime
-            overMaxResponseTime = overMaxResponseTime + tests[i].statisticsTestsOverMaxResponseTime
-            notMatchStatusCode = notMatchStatusCode + tests[i].statisticsTestsNotMatchStatusCode
+            if (tests[i].monitored) {
+                passed = passed + tests[i].statisticsTestsPassed
+                failed = failed + tests[i].statisticsTestsFailed
+                underMaxResponseTime = underMaxResponseTime + tests[i].statisticsTestsUnderMaxResponseTime
+                overMaxResponseTime = overMaxResponseTime + tests[i].statisticsTestsOverMaxResponseTime
+                notMatchStatusCode = notMatchStatusCode + tests[i].statisticsTestsNotMatchStatusCode
+            }
         }
 
         this.setState({
@@ -328,6 +348,11 @@ class SMTestOverviewGrid extends Component {
                 cell: row => <LastExecutedTimeColumn row={row}/>
             },
             {
+                name: 'Enable monitor',
+                button: true,
+                cell: row => <ToggleMonitoredButton row={row} smTestOverviewGrid={this}/>
+            },
+            {
                 name: 'Enable schedule',
                 button: true,
                 cell: row => <ToggleSMTestButton row={row} smTestOverviewGrid={this}/>
@@ -436,6 +461,30 @@ const runTestNow = (row, smTestOverviewGrid) => {
 
 const RunTestNowButton = ({row, smTestOverviewGrid}) => (
     <button type="button" title="Run test now" onClick={() => runTestNow(row, smTestOverviewGrid)} ><IoIosPlay/></button>
+);
+
+
+const toggleMonitored = (row, smTestOverviewGrid) => {
+    axios.post('http://localhost:8080/toggle_monitored',
+        null,
+        {params: {testName: row.name}})
+        .then(function (success) {
+            let value = success.data
+            smTestOverviewGrid.updateMonitoredFlag(row.name, value)
+        })
+        .catch(function (error) {
+            alert(error)
+        })
+}
+
+const ToggleMonitoredButton = ({row, smTestOverviewGrid}) => (
+    <ToggleButton
+        inactiveLabel={"OFF"}
+        activeLabel={<GoCheck/>}
+        value={row.monitored || false}
+        onToggle={(value) => {
+            toggleMonitored(row, smTestOverviewGrid)
+        }}/>
 );
 
 const LastExecutedTimeColumn = ({row}) => (

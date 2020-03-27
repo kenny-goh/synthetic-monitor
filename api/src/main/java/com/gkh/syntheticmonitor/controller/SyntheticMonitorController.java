@@ -41,9 +41,18 @@ public class SyntheticMonitorController {
 		return new ResponseEntity<String>(result.toString(), httpHeaders, HttpStatus.OK);
 	}
 
+	@PostMapping(value = "toggle_monitored")
+	@SneakyThrows
+	public ResponseEntity<String> toggleMonitored(@RequestParam  String testName)  {
+		Boolean result = appService.toggleMonitored(testName);
+		HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.set("Access-Control-Allow-Origin", "*");
+		return new ResponseEntity<String>(result.toString(), httpHeaders, HttpStatus.OK);
+	}
+
 	@PostMapping(value = "execute_test")
 	@SneakyThrows
-	public ResponseEntity<SMTest> executeTests(@RequestParam  String testName)  {
+	public ResponseEntity<SMTest> executeTest(@RequestParam  String testName)  {
 		SMTest test = appService.executeTest(testName);
 		HttpHeaders httpHeaders = new HttpHeaders();
 		httpHeaders.set("Access-Control-Allow-Origin", "*");

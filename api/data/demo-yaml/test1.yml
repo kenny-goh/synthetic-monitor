@@ -3,13 +3,13 @@ name: "Test1"
 description: null
 scheduleTimeInSeconds: 60
 type: "API"
+monitored: true
 active: true
 actions:
   - !<API>
     name: "Call random fox API"
     description: null
     type: "API"
-    excludeInTestReport: false
     postRequestScript: null
     preRequestScript: null
     maximalResponseThreshold: 3000
@@ -22,7 +22,7 @@ actions:
     name: "Call random fox API"
     description: null
     type: "API"
-    excludeInTestReport: false
+    : false
     postRequestScript: null
     preRequestScript: null
     maximalResponseThreshold: 3000

@@ -24,13 +24,13 @@ public class SchedulerService {
 	@Autowired
 	ApplicationService applicationService;
 
-	@Scheduled(fixedDelay = 15000)
+	@Scheduled(fixedDelay = 45000)
 	public void checkTestReadyToFire() {
 		log.info("checkTestReadyToFire: Time - {}", DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(LocalDateTime.now()) );
 		applicationService.checkTestsReadyToFire();
 	}
 
-	@Scheduled(fixedDelay = 20000)
+	@Scheduled(fixedDelay = 60000)
 	public void executeNextTest()  {
 		log.info("ExecuteNextTest: Time - {}", DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(LocalDateTime.now()));
 		applicationService.executeNextTests();

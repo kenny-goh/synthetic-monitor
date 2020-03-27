@@ -8,7 +8,7 @@ actions:
   name: "Simple test to execute POST api call"
   description: null
   type: "API"
-  excludeInTestReport: false
+  : false
   postRequestScript: null
   preRequestScript: null
   maximalResponseThreshold: 0

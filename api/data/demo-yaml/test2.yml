@@ -3,13 +3,13 @@ name: "Test2"
 description: null
 scheduleTimeInSeconds: 60
 type: "Transactions"
+monitored: true
 active: true
 actions:
   - !<API>
     name: "Call bitcoins API"
     description: null
     type: "API"
-    excludeInTestReport: false
     maximalResponseThreshold: 3000
     requestMethod: "GET"
     requestUrl: "https://api.coindesk.com/v1/bpi/currentprice.json"

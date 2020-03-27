@@ -34,7 +34,6 @@ public abstract class AbstractSMAction implements SMActionInterface {
 	private String name;
 	private String description;
 	private String type;
-	private boolean excludeInTestReport;
 	private String postRequestScript;
 	private String preRequestScript;
 

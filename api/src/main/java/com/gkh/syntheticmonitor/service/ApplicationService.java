@@ -77,7 +77,19 @@ public class ApplicationService {
 		} else {
 			throw new Exception("Test not found:" + testName);
 		}
+	}
 
+
+	@Transactional
+	public boolean toggleMonitored(String testName) throws Exception {
+		Optional<SMTest> optional = repository.findById(testName);
+		if (optional.isPresent()) {
+			SMTest test = optional.get();
+			test.setMonitored(!test.isMonitored());
+			return test.isMonitored();
+		} else {
+			throw new Exception("Test not found:" + testName);
+		}
 	}
 
 	@Transactional

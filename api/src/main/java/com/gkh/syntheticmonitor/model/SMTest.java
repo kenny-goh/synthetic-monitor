@@ -52,6 +52,7 @@ public class SMTest {
 	private boolean active;
 	private String type;
 	private boolean continueActionOnFail;
+	private boolean monitored;
 
 	@JsonIgnore
 	private boolean readyToExecute;
@@ -91,7 +92,7 @@ public class SMTest {
 
 	@JsonGetter
 	public long getStatisticsTestsUnderMaxResponseTime() {
-		return (this.reports.stream().filter(p->p.isAllResponseTimeUnderMax()).count());
+		return this.reports.stream().filter(p->p.isAllResponseTimeUnderMax()).count();
 	}
 
 	@JsonGetter
@@ -119,14 +120,6 @@ public class SMTest {
 	public double getAverageResponseTime() {
 		return this.reports.stream().mapToDouble(r->r.getSumResponseTime()).summaryStatistics().getAverage();
 	}
-
-//	@JsonGetter
-//	public long getMaxTimeThreshold() {
-//		if (this.reports.size() > 0) {
-//			return this.reports.get(0).getSumMaxTimeThreshold();
-//		}
-//		return 0;
-//	}
 
 	@JsonGetter
 	public double getTotalRuns() {
