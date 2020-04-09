@@ -17,7 +17,7 @@ export default class AppNavBar extends Component {
 
     render() {
         return <Navbar color="dark" dark expand="md">
-            <NavbarBrand><IoMdEye color="lightBlue"/>  Synthetic Monitor (Alpha)</NavbarBrand>
+            <NavbarBrand><IoMdEye color="lightBlue"/>  Synthetic Monitor 0.1</NavbarBrand>
             {/*<NavbarToggler onClick={this.toggle}/>*/}
             {/*<Collapse isOpen={this.state.isOpen} navbar>*/}
             {/*    <Nav className="ml-auto" navbar>*/}
