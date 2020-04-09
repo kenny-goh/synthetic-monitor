@@ -2,8 +2,6 @@ package com.gkh.syntheticmonitor.controller
 
 import com.gkh.syntheticmonitor.model.SMTest
 import com.gkh.syntheticmonitor.service.ApplicationService
-import lombok.SneakyThrows
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
@@ -12,7 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
-
 
 const val ACCESS_CONTROL_ALLOW_ORIGIN = "Access-Control-Allow-Origin"
 

@@ -48,7 +48,7 @@ class SMActionAPI : AbstractSMAction() {
 
     @JsonIgnore
     @Transient
-    var urlExpanded: String? = null
+    var requestUrlExpanded: String? = null
 
     @JsonIgnore
     @Transient
@@ -76,10 +76,10 @@ class SMActionAPI : AbstractSMAction() {
     }
 
     private fun expandURL(context: SMExecutionContext) {
-        urlExpanded = UriComponentsBuilder.fromHttpUrl(this.requestUrl!!)
+        requestUrlExpanded = UriComponentsBuilder.fromHttpUrl(this.requestUrl!!)
                 .buildAndExpand(context.vars)
                 .toUriString()
-        logger.info("Expanded URL $urlExpanded")
+        logger.info("Expanded URL $requestUrlExpanded")
     }
 
     fun expandRequestBody(context: SMExecutionContext) {
@@ -112,7 +112,7 @@ class SMActionAPI : AbstractSMAction() {
         try {
             val entity: HttpEntity<*> = HttpEntity<Any?>(requestBodyExpanded, httpHeaders)
             val httpMethod = getHttpMethod(requestMethod)
-            val response = restTemplate.exchange(urlExpanded!!, httpMethod, entity, String::class.java)
+            val response = restTemplate.exchange(requestUrlExpanded!!, httpMethod, entity, String::class.java)
 
             status = Integer.toString(response.statusCode.value())
             content = response.body
