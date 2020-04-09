@@ -25,15 +25,11 @@ class ReportDetail(@Id @GeneratedValue(strategy = GenerationType.AUTO)  val id: 
                    @Transient val content: String? = null,
                    @ManyToOne @JsonIgnore val parent: Report? = null) {
 
-    @get:Access(AccessType.PROPERTY)
-    @get:Column
-    @Transient
+    @get:Access(AccessType.PROPERTY) @get:Column @Transient
     var isResponseTimeUnderMax = false
         get() = responseTime <= maximumResponseThreshold
-    @get:Access(AccessType.PROPERTY)
-    @get:Column
 
-    @Transient
+    @get:Access(AccessType.PROPERTY) @get:Column @Transient
     var isStatusSuccess = false
         get() = isStatusCodeMatching and this.isResponseTimeUnderMax
 

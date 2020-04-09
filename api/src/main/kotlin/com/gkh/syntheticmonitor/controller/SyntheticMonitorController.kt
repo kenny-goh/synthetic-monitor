@@ -13,41 +13,41 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
+
+const val ACCESS_CONTROL_ALLOW_ORIGIN = "Access-Control-Allow-Origin"
+
 @RestController
 class SyntheticMonitorController(val appService: ApplicationService) {
 
-    @GetMapping(value = ["/find_all_tests"], produces = [MediaType.APPLICATION_JSON_VALUE])
+    @GetMapping(value = ["/find-all-tests"], produces = [MediaType.APPLICATION_JSON_VALUE])
     fun getTests(): ResponseEntity<List<SMTest>> {
         val results = appService.findAllTests()
         val httpHeaders = HttpHeaders()
-        httpHeaders["Access-Control-Allow-Origin"] = "*"
+        httpHeaders[ACCESS_CONTROL_ALLOW_ORIGIN] = "*"
         return ResponseEntity(results, httpHeaders, HttpStatus.OK)
     }
 
-    @PostMapping(value = ["toggle_test"])
-    @SneakyThrows
+    @PostMapping(value = ["toggle-test"])
     fun toggleTest(@RequestParam testName: String?): ResponseEntity<String> {
         val result = appService.toggleTests(testName!!)
         val httpHeaders = HttpHeaders()
-        httpHeaders["Access-Control-Allow-Origin"] = "*"
+        httpHeaders[ACCESS_CONTROL_ALLOW_ORIGIN] = "*"
         return ResponseEntity(result.toString(), httpHeaders, HttpStatus.OK)
     }
 
-    @PostMapping(value = ["toggle_monitored"])
-    @SneakyThrows
+    @PostMapping(value = ["toggle-monitored"])
     fun toggleMonitored(@RequestParam testName: String?): ResponseEntity<String> {
         val result = appService.toggleMonitored(testName!!)
         val httpHeaders = HttpHeaders()
-        httpHeaders["Access-Control-Allow-Origin"] = "*"
+        httpHeaders[ACCESS_CONTROL_ALLOW_ORIGIN] = "*"
         return ResponseEntity(result.toString(), httpHeaders, HttpStatus.OK)
     }
 
-    @PostMapping(value = ["execute_test"])
-    @SneakyThrows
+    @PostMapping(value = ["execute-test"])
     fun executeTest(@RequestParam testName: String?): ResponseEntity<SMTest> {
         val test = appService.executeTest(testName!!)
         val httpHeaders = HttpHeaders()
-        httpHeaders["Access-Control-Allow-Origin"] = "*"
+        httpHeaders[ACCESS_CONTROL_ALLOW_ORIGIN] = "*"
         return ResponseEntity(test, httpHeaders, HttpStatus.OK)
     }
 }

@@ -17,5 +17,5 @@ interface SMTestRepository : JpaRepository<SMTest, String> {
     fun selectReadyToExecuteTests(): List<SMTest>
 
     @Query("select test from SMTest test")
-    fun selectTests(): List<SMTest>
+    fun findAllTests(): List<SMTest>
 }

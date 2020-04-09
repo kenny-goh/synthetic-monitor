@@ -5,6 +5,7 @@ import lombok.Data
 import java.util.*
 
 class SMExecutionContext {
+
     val report = Report()
     var vars: HashMap<String,String> = HashMap()
     var status: String? = null
