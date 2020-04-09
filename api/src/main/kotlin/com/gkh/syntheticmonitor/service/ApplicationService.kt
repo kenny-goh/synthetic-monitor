@@ -5,7 +5,6 @@ import com.gkh.syntheticmonitor.model.SMExecutionContext
 import com.gkh.syntheticmonitor.model.SMTest
 import com.gkh.syntheticmonitor.repository.ReportRepository
 import com.gkh.syntheticmonitor.repository.SMTestRepository
-import lombok.SneakyThrows
 import lombok.extern.slf4j.Slf4j
 import org.apache.commons.io.FileUtils
 import org.apache.logging.log4j.LogManager
@@ -34,7 +33,8 @@ open class ApplicationService(
         private val logger = LogManager.getLogger()
     }
 
-    open fun init() { // Sync YAML and delete
+    open fun init() {
+        // Sync YAML and delete
         val filesInFolder = Files.walk(Paths.get(bootstrapYamlPath))
                 .filter { p: Path -> p.toString().endsWith(".yml") }
                 .map { obj: Path -> obj.toFile() }
@@ -55,7 +55,7 @@ open class ApplicationService(
     }
 
     open fun findAllTests(): List<SMTest> {
-        return repository.selectTests()
+        return repository.findAllTests()
     }
 
     @Throws(Exception::class)

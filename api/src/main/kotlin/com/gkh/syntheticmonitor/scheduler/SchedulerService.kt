@@ -1,7 +1,5 @@
 package com.gkh.syntheticmonitor.scheduler
 
-import com.gkh.syntheticmonitor.repository.ReportRepository
-import com.gkh.syntheticmonitor.repository.SMTestRepository
 import com.gkh.syntheticmonitor.service.ApplicationService
 import lombok.extern.slf4j.Slf4j
 import org.apache.logging.log4j.LogManager
@@ -13,8 +11,6 @@ import java.time.format.DateTimeFormatter
 @Slf4j
 @Service
 class SchedulerService(
-    private val testRepository: SMTestRepository,
-    private val reportRepository: ReportRepository,
     private var applicationService: ApplicationService
 ) {
 
@@ -24,13 +20,17 @@ class SchedulerService(
 
     @Scheduled(fixedDelay = 45000)
     fun checkTestReadyToFire() {
-        logger.info("checkTestReadyToFire: Time - {}", DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(LocalDateTime.now()))
-        applicationService!!.checkTestsReadyToFire()
+        val localDateTimeStr = getLocalDateTimeAsString()
+        logger.info("checkTestReadyToFire: Time - $localDateTimeStr")
+        applicationService.checkTestsReadyToFire()
     }
 
     @Scheduled(fixedDelay = 60000)
     fun executeNextTest() {
-        logger.info("ExecuteNextTest: Time - {}", DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(LocalDateTime.now()))
-        applicationService!!.executeNextTests()
+        val localDateTimeStr = getLocalDateTimeAsString()
+        logger.info("ExecuteNextTest: Time - $localDateTimeStr")
+        applicationService.executeNextTests()
     }
+
+    private fun getLocalDateTimeAsString() = DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(LocalDateTime.now())
 }

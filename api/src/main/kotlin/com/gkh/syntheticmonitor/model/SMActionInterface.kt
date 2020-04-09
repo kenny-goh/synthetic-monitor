@@ -11,7 +11,7 @@ interface SMActionInterface {
      *
      * @param context
      */
-    fun resolveVariables(context: SMExecutionContext)
+    fun expandInputParameters(context: SMExecutionContext)
 
     /**
      *
